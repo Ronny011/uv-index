@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
-export const Flower = styled.div`
+const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
+const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
+
+export const Flower = styled.div<{ isLowUv: boolean }>`
   margin-top: 15px;
   margin-bottom: 15px;
   width: 200px;
   aspect-ratio: 1;
-  background: linear-gradient(60deg, #ed303c, #ff9c5b);
+  background: ${({ isLowUv }) => (isLowUv ? GREEN_UV : RED_UV)};
   display: flex;
   align-items: center;
   justify-content: center;

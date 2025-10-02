@@ -13,7 +13,7 @@ export const useUvIndex = (longitude: number, latitude: number) => {
       throw new Error('Was not able to get UV index');
     }
 
-    return { uv: now.uvi, uvMax: getMaxUv(now.time, [...forecast, ...history]) };
+    return { uv: now.uvi, uvMax: getMaxUv(now, [...forecast, ...history]) };
   };
 
   return useQuery({

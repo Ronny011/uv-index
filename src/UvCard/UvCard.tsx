@@ -5,6 +5,8 @@ import { useGetGeolocation } from './hooks/useGetGeolocation';
 import { NOT_FOUND } from './utils/UvCard.constants';
 import { Skeleton } from '../Skeleton';
 
+const LOW_UV_CUTOFF = 4;
+
 export const UvCard = () => {
   const { latitude, longitude, geolocationError } = useGetGeolocation();
 
@@ -49,7 +51,7 @@ export const UvCard = () => {
         </Body>
       )}
 
-      <Flower>
+      <Flower isLowUv={Number(uv) < LOW_UV_CUTOFF}>
         {isUvIndexPeding ? (
           <Skeleton
             height={104}
