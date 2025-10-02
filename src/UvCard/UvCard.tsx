@@ -1,50 +1,73 @@
-import { type FC, useState, useEffect } from 'react';
-import { Flower, Text } from './UvCard.styles';
+import { Body, Flower, UvText } from './UvCard.styles';
+import { useReverseGeocode } from '../api/queries/useReverseGeocode';
+import { useUvIndex } from '../api/queries/useUvIndex';
+import { useGetGeolocation } from './hooks/useGetGeolocation';
+import { NOT_FOUND } from './utils/UvCard.constants';
+import { Skeleton } from '../Skeleton';
 
-interface Props {}
+export const UvCard = () => {
+  const { latitude, longitude, geolocationError } = useGetGeolocation();
 
-export const UvCard: FC<Props> = () => {
-  const [location, setLocation] = useState({
-    latitude: 0,
-    longitude: 0
-  });
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: reverseGeolocation,
+    isError: isReverseGeolocationError,
+    isPending: isReverseGeolocationPending,
+    error: reverseGeolocationError
+  } = useReverseGeocode(latitude, longitude);
+  const { city, country } = reverseGeolocation || {};
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser');
-      return;
-    }
+  const {
+    data: uvIndex,
+    isError: isUvIndexError,
+    isPending: isUvIndexPeding,
+    error: uvIndexError
+  } = useUvIndex(latitude, longitude);
+  const { uv, uvMax } = uvIndex || {};
 
-    const success = (position: GeolocationPosition) => {
-      const { latitude, longitude } = position.coords || {};
-      setLocation({
-        latitude,
-        longitude
-      });
+  if (geolocationError) {
+    return <p>{geolocationError}</p>;
+  }
 
-      setError(null);
-    };
+  if (isReverseGeolocationError && reverseGeolocationError) {
+    return <p>{reverseGeolocationError.message}</p>;
+  }
 
-    const handleError = (error: GeolocationPositionError) => {
-      setError(error.message);
-      console.error('Geolocation error:', error);
-    };
-
-    navigator.geolocation.getCurrentPosition(success, handleError, {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    });
-  }, []);
+  if (isUvIndexError && uvIndexError) {
+    return <p>{uvIndexError.message}</p>;
+  }
 
   return (
     <>
-      UV index at {location.latitude}, {location.longitude}
-      {error && <p>{error}</p>}
+      {isReverseGeolocationPending ? (
+        <Skeleton
+          height={24}
+          width={215}
+        />
+      ) : (
+        <Body>
+          UV index at {city}, ({country})
+        </Body>
+      )}
+
       <Flower>
-        <Text>5</Text>
+        {isUvIndexPeding ? (
+          <Skeleton
+            height={104}
+            width={104}
+          />
+        ) : (
+          <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv?.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
+        )}
       </Flower>
+
+      {isUvIndexError ? (
+        <Skeleton
+          height={24}
+          width={215}
+        />
+      ) : (
+        <Body>Max UV today: {uvMax}</Body>
+      )}
     </>
   );
 };

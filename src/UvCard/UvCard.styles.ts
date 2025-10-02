@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Flower = styled.div`
   margin-top: 15px;
+  margin-bottom: 15px;
   width: 200px;
   aspect-ratio: 1;
   background: linear-gradient(60deg, #ed303c, #ff9c5b);
@@ -123,10 +124,14 @@ export const Flower = styled.div`
     50% 50%;
 `;
 
-export const Text = styled.span`
-  font-size: 100px;
+export const UvText = styled.span`
+  font-size: 80px;
   font-weight: bold;
   color: white;
   z-index: 1;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
+export const Body = styled.span`
+  font-size: 18px;
 `;
