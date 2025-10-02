@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBackupUvIndex, getUvIndex } from '../uvIndex';
-import { INVALID_LAT_LONG } from '../../UvCard/utils/UvCard.constants';
+import { INVALID_LAT_LONG } from '../../UvCard/utils/constants';
 import { getMaxUv } from '../../utils/helpers';
 import { STALE_TIME } from '../../utils/constants';
 
@@ -13,7 +13,7 @@ export const useUvIndex = (longitude: number, latitude: number) => {
       throw new Error('Was not able to get UV index');
     }
 
-    return { uv: now.uvi, uvMax: getMaxUv(now, [...forecast, ...history]) };
+    return { uv: now.uvi, uvMax: getMaxUv(now, [...forecast, ...history]), nextHourUv: forecast[0].uvi };
   };
 
   return useQuery({

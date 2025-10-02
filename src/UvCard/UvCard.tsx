@@ -1,9 +1,10 @@
-import { Body, Flower, UvText } from './UvCard.styles';
+import { Body, Flower, Indicator, UvText } from './UvCard.styles';
 import { useReverseGeocode } from '../api/queries/useReverseGeocode';
 import { useUvIndex } from '../api/queries/useUvIndex';
 import { useGetGeolocation } from './hooks/useGetGeolocation';
-import { NOT_FOUND } from './utils/UvCard.constants';
+import { NOT_FOUND } from './utils/constants';
 import { Skeleton } from '../Skeleton';
+import { getWeightedAverageUvIndex } from './utils/helpers';
 
 const LOW_UV_CUTOFF = 4;
 
@@ -19,12 +20,14 @@ export const UvCard = () => {
   const { city, country } = reverseGeolocation || {};
 
   const {
-    data: uvIndex,
+    data: uvIndexdata,
     isError: isUvIndexError,
     isPending: isUvIndexPeding,
     error: uvIndexError
   } = useUvIndex(latitude, longitude);
-  const { uv, uvMax } = uvIndex || {};
+  const { uv, uvMax, nextHourUv } = uvIndexdata || {};
+
+  const uvIndex = getWeightedAverageUvIndex(uv!, nextHourUv!);
 
   if (geolocationError) {
     return <Body>{geolocationError}</Body>;
@@ -51,17 +54,25 @@ export const UvCard = () => {
         </Body>
       )}
 
-      <Flower isLowUv={Number(uv) < LOW_UV_CUTOFF}>
+      <Indicator>
         {isUvIndexPeding ? (
           <Skeleton
-            height={104}
-            width={104}
+            height={200}
+            width={200}
             isRound
           />
         ) : (
-          <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv?.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
+          <Flower $isLowUv={Number(uvIndex) < LOW_UV_CUTOFF}>
+            <>
+              {uvIndex || Number.isInteger(uvIndex) ? (
+                <UvText>{Number(uvIndex?.toFixed(2))}</UvText>
+              ) : (
+                <p>{NOT_FOUND}</p>
+              )}
+            </>
+          </Flower>
         )}
-      </Flower>
+      </Indicator>
 
       {isUvIndexPeding ? (
         <Skeleton
@@ -69,7 +80,7 @@ export const UvCard = () => {
           width={215}
         />
       ) : (
-        <Body>Max UV today: {uvMax}</Body>
+        <Body>Max UV today: {uvMax?.toFixed(2)}</Body>
       )}
     </>
   );
