@@ -25,15 +25,15 @@ export const UvCard = () => {
   const { uv, uvMax } = uvIndex || {};
 
   if (geolocationError) {
-    return <p>{geolocationError}</p>;
+    return <Body>{geolocationError}</Body>;
   }
 
   if (isReverseGeolocationError && reverseGeolocationError) {
-    return <p>{reverseGeolocationError.message}</p>;
+    return <Body>{reverseGeolocationError.message}</Body>;
   }
 
   if (isUvIndexError && uvIndexError) {
-    return <p>{uvIndexError.message}</p>;
+    return <Body>{uvIndexError.message}</Body>;
   }
 
   return (
@@ -54,13 +54,14 @@ export const UvCard = () => {
           <Skeleton
             height={104}
             width={104}
+            isRound
           />
         ) : (
           <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv?.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
         )}
       </Flower>
 
-      {isUvIndexError ? (
+      {isUvIndexPeding ? (
         <Skeleton
           height={24}
           width={215}
