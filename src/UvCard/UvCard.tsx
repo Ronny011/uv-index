@@ -62,7 +62,10 @@ export const UvCard = () => {
             isRound
           />
         ) : (
-          <Flower $isLowUv={Number(uvIndex) < LOW_UV_CUTOFF}>
+          <Flower
+            $isLowUv={Number(uvIndex) < LOW_UV_CUTOFF}
+            animate={{ rotate: 360 }}
+          >
             <>
               {uvIndex || Number.isInteger(uvIndex) ? (
                 <UvText>{Number(uvIndex?.toFixed(2))}</UvText>

@@ -1,14 +1,15 @@
+import { motion } from 'motion/react';
 import styled from 'styled-components';
 
 const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
 const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
 
 export const Indicator = styled.div`
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin: 45px;
+  filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.21));
 `;
 
-export const Flower = styled.div<{ $isLowUv: boolean }>`
+export const Flower = styled(motion.div)<{ $isLowUv: boolean }>`
   width: 200px;
   aspect-ratio: 1;
   background: ${({ $isLowUv }) => ($isLowUv ? GREEN_UV : RED_UV)};
@@ -140,4 +141,5 @@ export const UvText = styled.span`
 
 export const Body = styled.span`
   font-size: 18px;
+  font-weight: bold;
 `;
