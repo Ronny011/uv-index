@@ -150,7 +150,9 @@ export const Body = styled.span<{ $topMargin?: number }>`
 
 export const Chip = styled.div<{ $isLowUv: boolean }>`
   background: ${({ $isLowUv }) => ($isLowUv ? GREEN_UV : RED_UV)};
+  color: white;
   padding: 5px;
   padding-inline: 10px;
   border-radius: 999px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 `;

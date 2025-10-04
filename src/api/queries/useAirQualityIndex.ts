@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { airQualityIndex } from '../airQualityIndex';
+import { STALE_TIME } from '../../utils/constants';
 
 export const useAirQualityIndex = (latitude: number, longitude: number) => {
   const airQualityIndexAsync = async () => {
@@ -22,6 +23,7 @@ export const useAirQualityIndex = (latitude: number, longitude: number) => {
 
   return useQuery({
     queryKey: ['air-quality', 'reverse-geolocation'],
-    queryFn: airQualityIndexAsync
+    queryFn: airQualityIndexAsync,
+    staleTime: STALE_TIME
   });
 };

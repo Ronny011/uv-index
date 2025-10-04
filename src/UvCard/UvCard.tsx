@@ -4,7 +4,6 @@ import { useUvIndex } from '../api/queries/useUvIndex';
 import { useGetGeolocation } from './hooks/useGetGeolocation';
 import { NOT_FOUND } from './utils/constants';
 import { Skeleton } from '../Skeleton';
-import { getTimeFromISO } from '../utils/helpers';
 import { useAirQualityIndex } from '../api/queries/useAirQualityIndex';
 
 const LOW_UV_CUTOFF = 4;
@@ -85,7 +84,7 @@ export const UvCard = () => {
       ) : (
         <Body>
           Max UV today: <Chip $isLowUv={Number(uvMax) < LOW_UV_CUTOFF}>{uvMax?.toFixed(2)}</Chip>
-          at {getTimeFromISO(uvMaxTime || '')}
+          at {uvMaxTime}
         </Body>
       )}
       {isAirQualityIndexPending ? (
