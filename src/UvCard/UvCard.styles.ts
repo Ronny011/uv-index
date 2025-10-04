@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
 const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
 
-export const Indicator = styled.div`
+export const Indicator = styled.div<{ $isLoading: boolean }>`
   margin: 45px;
-  filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.21));
+  filter: ${({ $isLoading }) => ($isLoading ? 'none' : 'drop-shadow(0 0 15px rgba(0, 0, 0, 0.21))')};
 `;
 
 export const Flower = styled(motion.div)<{ $isLowUv: boolean }>`
@@ -139,7 +139,18 @@ export const UvText = styled.span`
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `;
 
-export const Body = styled.span`
+export const Body = styled.span<{ $topMargin?: number }>`
+  margin-top: ${({ $topMargin }) => $topMargin || 0}px;
   font-size: 18px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const Chip = styled.div<{ $isLowUv: boolean }>`
+  background: ${({ $isLowUv }) => ($isLowUv ? GREEN_UV : RED_UV)};
+  padding: 5px;
+  padding-inline: 10px;
+  border-radius: 999px;
 `;

@@ -1,15 +1,23 @@
-import { Body, Flower, Indicator, UvText } from './UvCard.styles';
+import { Body, Chip, Flower, Indicator, UvText } from './UvCard.styles';
 import { useReverseGeocode } from '../api/queries/useReverseGeocode';
 import { useUvIndex } from '../api/queries/useUvIndex';
 import { useGetGeolocation } from './hooks/useGetGeolocation';
 import { NOT_FOUND } from './utils/constants';
 import { Skeleton } from '../Skeleton';
-import { getWeightedAverageUvIndex } from './utils/helpers';
+import { getTimeFromISO } from '../utils/helpers';
+import { useAirQualityIndex } from '../api/queries/useAirQualityIndex';
 
 const LOW_UV_CUTOFF = 4;
 
 export const UvCard = () => {
   const { latitude, longitude, geolocationError } = useGetGeolocation();
+
+  const {
+    data: airQualityIndex,
+    isError: AirQualityIndexError,
+    isPending: isAirQualityIndexPending,
+    error: airQualityError
+  } = useAirQualityIndex(latitude, longitude);
 
   const {
     data: reverseGeolocation,
@@ -25,9 +33,7 @@ export const UvCard = () => {
     isPending: isUvIndexPeding,
     error: uvIndexError
   } = useUvIndex(latitude, longitude);
-  const { uv, uvMax, nextHourUv } = uvIndexdata || {};
-
-  const uvIndex = getWeightedAverageUvIndex(uv!, nextHourUv!);
+  const { uv, uvMax, uvMaxTime } = uvIndexdata || {};
 
   if (geolocationError) {
     return <Body>{geolocationError}</Body>;
@@ -50,11 +56,11 @@ export const UvCard = () => {
         />
       ) : (
         <Body>
-          UV index at {city}, ({country})
+          UV index at {city}, {country}
         </Body>
       )}
 
-      <Indicator>
+      <Indicator $isLoading={isUvIndexPeding}>
         {isUvIndexPeding ? (
           <Skeleton
             height={200}
@@ -63,27 +69,32 @@ export const UvCard = () => {
           />
         ) : (
           <Flower
-            $isLowUv={Number(uvIndex) < LOW_UV_CUTOFF}
-            animate={{ rotate: 360 }}
+            $isLowUv={Number(uv) < LOW_UV_CUTOFF}
+            animate={{ rotate: 360, transition: { delay: 0.3, duration: 0.3, ease: 'easeInOut' } }}
           >
-            <>
-              {uvIndex || Number.isInteger(uvIndex) ? (
-                <UvText>{Number(uvIndex?.toFixed(2))}</UvText>
-              ) : (
-                <p>{NOT_FOUND}</p>
-              )}
-            </>
+            <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv?.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
           </Flower>
         )}
       </Indicator>
 
       {isUvIndexPeding ? (
         <Skeleton
-          height={24}
+          height={34}
           width={215}
         />
       ) : (
-        <Body>Max UV today: {uvMax?.toFixed(2)}</Body>
+        <Body>
+          Max UV today: <Chip $isLowUv={Number(uvMax) < LOW_UV_CUTOFF}>{uvMax?.toFixed(2)}</Chip>
+          at {getTimeFromISO(uvMaxTime || '')}
+        </Body>
+      )}
+      {isAirQualityIndexPending ? (
+        <Skeleton
+          height={39}
+          width={58}
+        />
+      ) : (
+        <Body $topMargin={15}>{AirQualityIndexError ? airQualityError.message : `AQI ${airQualityIndex?.aqi}`}</Body>
       )}
     </>
   );

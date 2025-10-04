@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBackupUvIndex, getUvIndex } from '../uvIndex';
 import { INVALID_LAT_LONG } from '../../UvCard/utils/constants';
-import { getMaxUv } from '../../utils/helpers';
+import { getDateFromISO, getMaxUv } from '../../utils/helpers';
 import { STALE_TIME } from '../../utils/constants';
+import { getWeightedAverageUvIndex } from '../../UvCard/utils/helpers';
 
 export const useUvIndex = (longitude: number, latitude: number) => {
   const getUvIndexAsync = async () => {
@@ -13,7 +14,17 @@ export const useUvIndex = (longitude: number, latitude: number) => {
       throw new Error('Was not able to get UV index');
     }
 
-    return { uv: now.uvi, uvMax: getMaxUv(now, [...forecast, ...history]), nextHourUv: forecast[0].uvi };
+    const unifiedDataForToday = [...forecast, ...history].filter(
+      ({ time }) => getDateFromISO(time) === getDateFromISO(now.time)
+    );
+    const uvMax = getMaxUv(now.uvi, unifiedDataForToday);
+    const { time: uvMaxTime } = unifiedDataForToday.find((reading) => reading.uvi === uvMax) || {};
+
+    return {
+      uv: getWeightedAverageUvIndex(now.uvi, forecast[0].uvi),
+      uvMax,
+      uvMaxTime
+    };
   };
 
   return useQuery({
