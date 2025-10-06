@@ -8,7 +8,14 @@ export const getWeightedAverageUvIndex = (thisHourIndex: number, nextHourIndex: 
 };
 
 export const getDateFromISO = (isoDate: string) => isoDate.split(ISO_TIME_DELIMITER)[0];
-export const getTimeFromISO = (isoDate: string) => isoDate.split(ISO_TIME_DELIMITER)[1].slice(0, -4);
+
+export const getTimeFromISO = (isoDate: string) => {
+  const timeOffset = new Date().getTimezoneOffset() / -60;
+  const UtcTime = isoDate.split(ISO_TIME_DELIMITER)[1].slice(0, -4);
+  const [hours, minutes] = UtcTime.split(':');
+
+  return `${Number(hours) + timeOffset}:${minutes}`;
+};
 
 export const getMaxUv = (uvi: number, unifiedDataForToday: UVI[]) => {
   return unifiedDataForToday.reduce((acc, curr) => {

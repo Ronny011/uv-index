@@ -1,10 +1,11 @@
-import { Body, Chip, Flower, Indicator, UvText } from './UvCard.styles';
+import { Body, Chip, Flower, Indicator, SecondaryInfo, UvText } from './UvCard.styles';
 import { useReverseGeocode } from '../api/queries/useReverseGeocode';
 import { useUvIndex } from '../api/queries/useUvIndex';
 import { useGetGeolocation } from './hooks/useGetGeolocation';
 import { NOT_FOUND } from './utils/constants';
 import { Skeleton } from '../Skeleton';
 import { useAirQualityIndex } from '../api/queries/useAirQualityIndex';
+import { useTemperature } from '../api/queries/useTemperature';
 
 const LOW_UV_CUTOFF = 4;
 
@@ -34,6 +35,14 @@ export const UvCard = () => {
   } = useUvIndex(latitude, longitude);
   const { uv, uvMax, uvMaxTime } = uvIndexdata || {};
 
+  const {
+    data: temperatureData,
+    isPending: isTemperaturePending,
+    isError: isTemperatureError,
+    error: temperatureError
+  } = useTemperature(latitude, longitude);
+  const { current, daily } = temperatureData || {};
+
   if (geolocationError) {
     return <Body>{geolocationError}</Body>;
   }
@@ -44,6 +53,10 @@ export const UvCard = () => {
 
   if (isUvIndexError && uvIndexError) {
     return <Body>{uvIndexError.message}</Body>;
+  }
+
+  if (isTemperatureError && temperatureError) {
+    return <Body>{temperatureError.message}</Body>;
   }
 
   return (
@@ -87,14 +100,27 @@ export const UvCard = () => {
           at {uvMaxTime}
         </Body>
       )}
-      {isAirQualityIndexPending ? (
-        <Skeleton
-          height={39}
-          width={58}
-        />
-      ) : (
-        <Body $topMargin={15}>{AirQualityIndexError ? airQualityError.message : `AQI ${airQualityIndex?.aqi}`}</Body>
-      )}
+      <SecondaryInfo>
+        {isAirQualityIndexPending ? (
+          <Skeleton
+            height={24}
+            width={58}
+          />
+        ) : (
+          <Body>{AirQualityIndexError ? airQualityError.message : `AQI ${airQualityIndex?.aqi}`}</Body>
+        )}
+        {isTemperaturePending ? (
+          <Skeleton
+            height={24}
+            width={157}
+          />
+        ) : (
+          <>
+            <Body>{'|'}</Body>
+            <Body>{`Temperature: ${current?.temperature}`}°</Body>
+          </>
+        )}
+      </SecondaryInfo>
     </>
   );
 };

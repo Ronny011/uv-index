@@ -156,3 +156,9 @@ export const Chip = styled.div<{ $isLowUv: boolean }>`
   border-radius: 999px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 `;
+
+export const SecondaryInfo = styled.div`
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+`;
