@@ -39,7 +39,7 @@ export const UvCard = () => {
 
   useEffect(() => {
     if (!cachedMaxUv) {
-      localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv ?? 0));
+      localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv));
     } else {
       Number(cachedMaxUv) < maxUv && localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv));
     }
