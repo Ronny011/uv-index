@@ -9,3 +9,5 @@ Want to decide whether you should put on some sun screen? Well, tough luck if yo
 With this UV index app you get a quick glance at the current UV index, and today's max.
 
 Also, hourly changes can be pretty significant, so the hourly index indication might not be enough. This is why we are actually using a weighted average, which should be more accurate.
+
+To give a better 'big picture' view of the weather, we have added Air Quality Index, and Temperature.
