@@ -17,7 +17,8 @@
     "motion": "^12.23.22",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",

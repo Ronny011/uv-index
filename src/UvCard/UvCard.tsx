@@ -1,62 +1,37 @@
-import { Body, Chip, Flower, Indicator, SecondaryInfo, UvText } from './UvCard.styles';
-import { useReverseGeocode } from '../api/queries/useReverseGeocode';
-import { useUvIndex } from '../api/queries/useUvIndex';
-import { useGetGeolocation } from './hooks/useGetGeolocation';
+import { Body, Chip, Flower, Indicator, UvText } from './UvCard.styles';
 import { NOT_FOUND } from './utils/constants';
-import { Skeleton } from '../Skeleton';
-import { useAirQualityIndex } from '../api/queries/useAirQualityIndex';
-import { useTemperature } from '../api/queries/useTemperature';
+import { Skeleton } from './components/Skeleton';
+import { useGetCardData } from './hooks/useGetCardData';
+import { SecondaryInfo } from './components/SecondaryInfo';
 
 const LOW_UV_CUTOFF = 4;
 
 export const UvCard = () => {
-  const { latitude, longitude, geolocationError } = useGetGeolocation();
-
   const {
-    data: airQualityIndex,
-    isError: AirQualityIndexError,
-    isPending: isAirQualityIndexPending,
-    error: airQualityError
-  } = useAirQualityIndex(latitude, longitude);
-
-  const {
-    data: reverseGeolocation,
-    isError: isReverseGeolocationError,
-    isPending: isReverseGeolocationPending,
-    error: reverseGeolocationError
-  } = useReverseGeocode(latitude, longitude);
+    geolocationError,
+    reverseGeolocation,
+    isReverseGeolocationPending,
+    isReverseGeolocationError,
+    reverseGeolocationError,
+    uvIndexdata,
+    isUvIndexPeding,
+    isUvIndexError,
+    uvIndexError,
+    longitude,
+    latitude
+  } = useGetCardData();
   const { city, country } = reverseGeolocation || {};
-
-  const {
-    data: uvIndexdata,
-    isError: isUvIndexError,
-    isPending: isUvIndexPeding,
-    error: uvIndexError
-  } = useUvIndex(latitude, longitude);
   const { uv, uvMax, uvMaxTime } = uvIndexdata || {};
 
-  const {
-    data: temperatureData,
-    isPending: isTemperaturePending,
-    isError: isTemperatureError,
-    error: temperatureError
-  } = useTemperature(latitude, longitude);
-  const { current, daily } = temperatureData || {};
+  switch (true) {
+    case geolocationError && isReverseGeolocationError:
+      return <Body>{geolocationError}</Body>;
 
-  if (geolocationError) {
-    return <Body>{geolocationError}</Body>;
-  }
+    case isReverseGeolocationError:
+      return <Body>{reverseGeolocationError?.message}</Body>;
 
-  if (isReverseGeolocationError && reverseGeolocationError) {
-    return <Body>{reverseGeolocationError.message}</Body>;
-  }
-
-  if (isUvIndexError && uvIndexError) {
-    return <Body>{uvIndexError.message}</Body>;
-  }
-
-  if (isTemperatureError && temperatureError) {
-    return <Body>{temperatureError.message}</Body>;
+    case isUvIndexError:
+      return <Body>{uvIndexError?.message}</Body>;
   }
 
   return (
@@ -100,27 +75,11 @@ export const UvCard = () => {
           at {uvMaxTime}
         </Body>
       )}
-      <SecondaryInfo>
-        {isAirQualityIndexPending ? (
-          <Skeleton
-            height={24}
-            width={58}
-          />
-        ) : (
-          <Body>{AirQualityIndexError ? airQualityError.message : `AQI ${airQualityIndex?.aqi}`}</Body>
-        )}
-        {isTemperaturePending ? (
-          <Skeleton
-            height={24}
-            width={157}
-          />
-        ) : (
-          <>
-            <Body>{'|'}</Body>
-            <Body>{`Temperature: ${current?.temperature}`}°</Body>
-          </>
-        )}
-      </SecondaryInfo>
+
+      <SecondaryInfo
+        longitude={longitude}
+        latitude={latitude}
+      />
     </>
   );
 };

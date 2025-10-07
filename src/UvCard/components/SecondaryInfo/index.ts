@@ -1,0 +1,1 @@
+export { SecondaryInfo } from './SecondaryInfo';
