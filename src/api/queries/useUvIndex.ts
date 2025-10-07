@@ -16,13 +16,13 @@ export const useUvIndex = (longitude: number, latitude: number) => {
     const unifiedDataForToday = [...forecast, ...history].filter(
       ({ time }) => getDateFromISO(time) === getDateFromISO(now.time)
     );
-    const uvMax = getMaxUv(now.uvi, unifiedDataForToday);
-    const { time } = unifiedDataForToday.find((reading) => reading.uvi === uvMax) || {};
+    const maxUv = getMaxUv(now.uvi, unifiedDataForToday);
+    const { time } = unifiedDataForToday.find((reading) => reading.uvi === maxUv) || {};
 
     return {
       uv: getWeightedAverageUvIndex(now.uvi, forecast[0].uvi),
-      uvMax,
-      uvMaxTime: getTimeFromISO(time || ISO_TIME_DELIMITER)
+      maxUv,
+      maxUvTime: getTimeFromISO(time || ISO_TIME_DELIMITER)
     };
   };
 

@@ -3,8 +3,10 @@ import { NOT_FOUND } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
 import { useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
+import { useEffect } from 'react';
 
 const LOW_UV_CUTOFF = 4;
+const LOCALSTORAGE_MAX_UV_KEY = 'uvMax';
 
 export const UvCard = () => {
   const {
@@ -21,7 +23,8 @@ export const UvCard = () => {
     latitude
   } = useGetCardData();
   const { city, country } = reverseGeolocation || {};
-  const { uv, uvMax, uvMaxTime } = uvIndexdata || {};
+  const { uv, maxUv, maxUvTime } = uvIndexdata || { uv: 0, maxUv: 0 };
+  const cachedMaxUv = localStorage.getItem(LOCALSTORAGE_MAX_UV_KEY);
 
   switch (true) {
     case geolocationError && isReverseGeolocationError:
@@ -33,6 +36,14 @@ export const UvCard = () => {
     case isUvIndexError:
       return <Body>{uvIndexError?.message}</Body>;
   }
+
+  useEffect(() => {
+    if (!cachedMaxUv) {
+      localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv));
+    } else {
+      Number(cachedMaxUv) < maxUv && localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv));
+    }
+  }, [isUvIndexPeding]);
 
   return (
     <>
@@ -59,7 +70,7 @@ export const UvCard = () => {
             $isLowUv={Number(uv) < LOW_UV_CUTOFF}
             animate={{ rotate: 360, transition: { delay: 0.3, duration: 0.3, ease: 'easeInOut' } }}
           >
-            <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv?.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
+            <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
           </Flower>
         )}
       </Indicator>
@@ -71,8 +82,9 @@ export const UvCard = () => {
         />
       ) : (
         <Body>
-          Max UV today: <Chip $isLowUv={Number(uvMax) < LOW_UV_CUTOFF}>{uvMax?.toFixed(2)}</Chip>
-          at {uvMaxTime}
+          Max UV today:
+          <Chip $isLowUv={Number(cachedMaxUv) < LOW_UV_CUTOFF}>{parseFloat(Number(cachedMaxUv).toFixed(2))}</Chip>
+          at {maxUvTime}
         </Body>
       )}
 
