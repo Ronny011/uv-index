@@ -22,7 +22,7 @@ export const UvCard = () => {
     longitude,
     latitude
   } = useGetCardData();
-  const { city, country } = reverseGeolocation || {};
+  const { town, country } = reverseGeolocation || {};
   const { uv, maxUv, maxUvTime } = uvIndexdata || { uv: 0, maxUv: 0 };
   const cachedMaxUv = localStorage.getItem(LOCALSTORAGE_MAX_UV_KEY);
 
@@ -54,7 +54,7 @@ export const UvCard = () => {
         />
       ) : (
         <Body>
-          UV index at {city}, {country}
+          UV index at {town}, {country}
         </Body>
       )}
 
