@@ -3,12 +3,24 @@ import { NOT_FOUND } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
 import { useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const LOW_UV_CUTOFF = 4;
 const LOCALSTORAGE_MAX_UV_KEY = 'uvMax';
+const UV_INDEX_EMPTY_STATE = { uv: 0, maxUv: 0, maxUvTime: '0' };
+
+type MaxUvObject = {
+  maxUv: number;
+  maxUvTime: string;
+};
+
+const getLocalStorageMaxUv = (): MaxUvObject =>
+  JSON.parse(localStorage.getItem(LOCALSTORAGE_MAX_UV_KEY) || `${UV_INDEX_EMPTY_STATE}`);
 
 export const UvCard = () => {
+  const [cachedMaxUvObject, setCachedMaxUvObject] = useState<MaxUvObject>(getLocalStorageMaxUv());
+  const { maxUv: cachedMaxUv, maxUvTime: cachedMaxUvTime } = cachedMaxUvObject;
+
   const {
     geolocationError,
     reverseGeolocation,
@@ -23,8 +35,14 @@ export const UvCard = () => {
     latitude
   } = useGetCardData();
   const { town, country } = reverseGeolocation || {};
-  const { uv, maxUv, maxUvTime } = uvIndexdata || { uv: 0, maxUv: 0 };
-  const cachedMaxUv = localStorage.getItem(LOCALSTORAGE_MAX_UV_KEY);
+  const { uv, maxUv, maxUvTime } = uvIndexdata || UV_INDEX_EMPTY_STATE;
+
+  const updateCachedMaxUv = (maxUv: number, maxUvTime: string) => {
+    setCachedMaxUvObject(() => {
+      localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, JSON.stringify({ maxUv, maxUvTime }));
+      return { maxUv, maxUvTime };
+    });
+  };
 
   switch (true) {
     case geolocationError && isReverseGeolocationError:
@@ -38,11 +56,9 @@ export const UvCard = () => {
   }
 
   useEffect(() => {
-    if (!cachedMaxUv) {
-      localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv));
-    } else {
-      Number(cachedMaxUv) < maxUv && localStorage.setItem(LOCALSTORAGE_MAX_UV_KEY, String(maxUv));
-    }
+    const { maxUv: localStorageMaxUv } = getLocalStorageMaxUv();
+
+    (!localStorageMaxUv || Number(localStorageMaxUv) < maxUv) && updateCachedMaxUv(localStorageMaxUv, maxUvTime);
   }, [isUvIndexPeding]);
 
   return (
@@ -84,7 +100,7 @@ export const UvCard = () => {
         <Body>
           Max UV today:
           <Chip $isLowUv={Number(cachedMaxUv) < LOW_UV_CUTOFF}>{parseFloat(Number(cachedMaxUv).toFixed(2))}</Chip>
-          at {maxUvTime}
+          at {cachedMaxUvTime}
         </Body>
       )}
 
