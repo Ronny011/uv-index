@@ -15,7 +15,7 @@ type MaxUvObject = {
 };
 
 const getLocalStorageMaxUv = (): MaxUvObject =>
-  JSON.parse(localStorage.getItem(LOCALSTORAGE_MAX_UV_KEY) || `${UV_INDEX_EMPTY_STATE}`);
+  JSON.parse(localStorage.getItem(LOCALSTORAGE_MAX_UV_KEY) || JSON.stringify(UV_INDEX_EMPTY_STATE));
 
 export const UvCard = () => {
   const [cachedMaxUvObject, setCachedMaxUvObject] = useState<MaxUvObject>(getLocalStorageMaxUv());
@@ -58,8 +58,8 @@ export const UvCard = () => {
   useEffect(() => {
     const { maxUv: localStorageMaxUv } = getLocalStorageMaxUv();
 
-    (!localStorageMaxUv || Number(localStorageMaxUv) < maxUv) && updateCachedMaxUv(localStorageMaxUv, maxUvTime);
-  }, [isUvIndexPeding]);
+    (!localStorageMaxUv || Number(localStorageMaxUv) < maxUv) && updateCachedMaxUv(maxUv, maxUvTime);
+  }, [isUvIndexPeding, maxUv, maxUvTime]);
 
   return (
     <>
