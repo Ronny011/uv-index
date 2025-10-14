@@ -8,3 +8,4 @@ export const theme = {
 };
 
 export const TRANSITION_TIME = 0.3;
+export const EASE = 'easeInOut';

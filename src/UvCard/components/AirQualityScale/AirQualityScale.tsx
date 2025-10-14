@@ -1,6 +1,6 @@
 import { type FC } from 'react';
-import { airQualityLevelColors, LevelBlock, Scale } from './AirQualityScale.styles';
-import { TRANSITION_TIME } from 'utils/constants';
+import { airQualityLevelMutedColors, LevelBlock, Scale } from './AirQualityScale.styles';
+import { EASE, TRANSITION_TIME } from 'utils/constants';
 
 interface Props {
   aqi: number;
@@ -10,7 +10,7 @@ interface Props {
 export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel }) => {
   return (
     <Scale>
-      {airQualityLevelColors.map((color, index) => {
+      {airQualityLevelMutedColors.map((color, index) => {
         const isCorrespondingBlock = qualityLevel === index;
         return (
           <LevelBlock
@@ -19,8 +19,8 @@ export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel }) => {
             index={index}
             isCorrespondingBlock={isCorrespondingBlock}
             animate={{
-              scale: isCorrespondingBlock ? 1.5 : 1,
-              transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: 'easeInOut' }
+              scale: isCorrespondingBlock ? 1.3 : 1,
+              transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: EASE }
             }}
           >
             {qualityLevel === index && aqi}

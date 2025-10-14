@@ -15,24 +15,25 @@ export const SecondaryInfo: FC<Props> = ({ latitude, longitude }) => {
   const {
     airQualityIndex,
     isAirQualityIndexPending,
+    isAirQualityIndexError,
+    airQualityError,
     temperatureData,
     isTemperaturePending,
     isTemperatureError,
     temperatureError
   } = useGetSecondaryInfo(latitude, longitude);
-  const { current, daily } = temperatureData || {};
+  const { current, daily: _ } = temperatureData || {};
   const aqi = airQualityIndex?.aqi || 0;
 
   return (
     <FlexWrapper>
-      <Body>Air quality index</Body>
+      <Body>{isAirQualityIndexError ? airQualityError?.message : 'Air quality'}</Body>
       {isAirQualityIndexPending ? (
         <Skeleton
           height={24}
-          width={58}
+          width={245}
         />
       ) : (
-        // <Body>{isAirQualityIndexError ? airQualityError?.message : `AQI ${airQualityIndex?.aqi}`}</Body>
         <AirQualityScale
           aqi={aqi}
           qualityLevel={getAqiHealth(aqi).level}
