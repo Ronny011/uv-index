@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import styled from 'styled-components';
+import { theme } from 'utils/constants';
 
 const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
 const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
@@ -153,6 +154,6 @@ export const Chip = styled.div<{ $isLowUv: boolean }>`
   color: white;
   padding: 5px;
   padding-inline: 10px;
-  border-radius: 999px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: ${theme.borderRadius};
+  ${theme.boxShadow}
 `;

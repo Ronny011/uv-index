@@ -1,0 +1,1 @@
+export { AirQualityScale } from './AirQualityScale';

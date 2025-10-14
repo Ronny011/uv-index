@@ -4,6 +4,7 @@ import { Skeleton } from './components/Skeleton';
 import { useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect, useState } from 'react';
+import { TRANSITION_TIME } from 'utils/constants';
 
 const LOW_UV_CUTOFF = 4;
 const LOCALSTORAGE_MAX_UV_KEY = 'uvMax';
@@ -84,7 +85,10 @@ export const UvCard = () => {
         ) : (
           <Flower
             $isLowUv={Number(uv) < LOW_UV_CUTOFF}
-            animate={{ rotate: 360, transition: { delay: 0.3, duration: 0.3, ease: 'easeInOut' } }}
+            animate={{
+              rotate: 360,
+              transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: 'easeInOut' }
+            }}
           >
             <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
           </Flower>
