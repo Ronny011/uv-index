@@ -5,7 +5,7 @@ export const useGetGeolocation = () => {
     latitude: 0,
     longitude: 0
   });
-  const [geolocationError, setGeolocationError] = useState<string | null>(null);
+  const [geolocationError, setGeolocationError] = useState<string>();
 
   const { latitude, longitude } = location;
 
@@ -22,7 +22,7 @@ export const useGetGeolocation = () => {
         longitude
       });
 
-      setGeolocationError(null);
+      setGeolocationError(undefined);
     };
 
     const handleGeolocationError = (error: GeolocationPositionError) => {

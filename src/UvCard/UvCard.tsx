@@ -1,14 +1,10 @@
 import { Body, Chip, Flower, Indicator, UvText } from './UvCard.styles';
-import { NOT_FOUND } from './utils/constants';
+import { LOCALSTORAGE_MAX_UV_KEY, LOW_UV_CUTOFF, NOT_FOUND, UV_INDEX_EMPTY_STATE } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
 import { useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect, useState } from 'react';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
-
-const LOW_UV_CUTOFF = 4;
-const LOCALSTORAGE_MAX_UV_KEY = 'uvMax';
-const UV_INDEX_EMPTY_STATE = { uv: 0, maxUv: 0, maxUvTime: '0' };
 
 type MaxUvObject = {
   maxUv: number;

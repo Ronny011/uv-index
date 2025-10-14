@@ -13,8 +13,9 @@ export const useTemperature = (latitude: number, longitude: number) => {
     }
 
     return {
-      current: { temperature: current.temperature_2m },
-      daily: { tempMax: daily.temperature_2m_max, tempMin: daily.temperature_2m_min }
+      current: current.temperature_2m,
+      dailyMin: daily.temperature_2m_min,
+      dailyMax: daily.temperature_2m_max
     };
   };
 

@@ -1,13 +1,24 @@
 import { type FC } from 'react';
 import { airQualityLevelMutedColors, LevelBlock, Scale } from './AirQualityScale.styles';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
+import { Skeleton } from 'UvCard/components/Skeleton';
 
 interface Props {
   aqi: number;
   qualityLevel: number;
+  isloading: boolean;
 }
 
-export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel }) => {
+export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel, isloading }) => {
+  if (isloading) {
+    return (
+      <Skeleton
+        height={24}
+        width={245}
+      />
+    );
+  }
+
   return (
     <Scale>
       {airQualityLevelMutedColors.map((color, index) => {

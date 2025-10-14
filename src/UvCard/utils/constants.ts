@@ -10,3 +10,7 @@ export enum AqiHealth {
   Hazardous = 'Hazardous',
   OutOfScale = 'Value not in scale'
 }
+
+export const LOW_UV_CUTOFF = 4;
+export const LOCALSTORAGE_MAX_UV_KEY = 'uvMax';
+export const UV_INDEX_EMPTY_STATE = { uv: 0, maxUv: 0, maxUvTime: '0' };

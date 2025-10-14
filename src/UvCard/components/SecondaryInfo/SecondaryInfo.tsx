@@ -1,10 +1,10 @@
 import { type FC } from 'react';
 import { Body } from '../../UvCard.styles';
-import { Skeleton } from '../Skeleton';
 import { FlexWrapper } from './SecondaryInfo.styles';
 import { useGetSecondaryInfo } from './hooks/useGetSecondaryInfo';
-import { AirQualityScale } from '../AirQualityScale';
+import { AirQualityScale } from './components/AirQualityScale';
 import { getAqiHealth } from './util/helpers';
+import { Temperature } from './components/Temperature';
 
 interface Props {
   latitude: number;
@@ -22,31 +22,22 @@ export const SecondaryInfo: FC<Props> = ({ latitude, longitude }) => {
     isTemperatureError,
     temperatureError
   } = useGetSecondaryInfo(latitude, longitude);
-  const { current, daily: _ } = temperatureData || {};
   const aqi = airQualityIndex?.aqi || 0;
 
   return (
     <FlexWrapper>
       <Body>{isAirQualityIndexError ? airQualityError?.message : 'Air quality'}</Body>
-      {isAirQualityIndexPending ? (
-        <Skeleton
-          height={24}
-          width={245}
-        />
-      ) : (
-        <AirQualityScale
-          aqi={aqi}
-          qualityLevel={getAqiHealth(aqi).level}
-        />
-      )}
-      {isTemperaturePending ? (
-        <Skeleton
-          height={24}
-          width={157}
-        />
-      ) : (
-        <Body>{isTemperatureError ? temperatureError?.message : `Temperature: ${current?.temperature}`}°</Body>
-      )}
+      <AirQualityScale
+        aqi={aqi}
+        qualityLevel={getAqiHealth(aqi).level}
+        isloading={isAirQualityIndexPending}
+      />
+
+      <Body>{isTemperatureError ? temperatureError?.message : `Temperature`}</Body>
+      <Temperature
+        temperatureData={temperatureData}
+        isLoading={isTemperaturePending}
+      />
     </FlexWrapper>
   );
 };

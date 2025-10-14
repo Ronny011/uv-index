@@ -14,3 +14,5 @@ export type TemperatureResponse = {
   current: { temperature_2m: number; is_day: number };
   daily: { temperature_2m_max: number[]; temperature_2m_min: number[] };
 };
+
+export type TemperatureData = { current: number; dailyMin: number[]; dailyMax: number[] };
