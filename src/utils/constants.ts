@@ -4,6 +4,7 @@ export const ISO_TIME_DELIMITER = 'T';
 
 export const theme = {
   boxShadow: 'box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)',
+  textShadow: 'text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)',
   borderRadius: '20px'
 };
 

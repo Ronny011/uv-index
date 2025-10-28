@@ -3,6 +3,7 @@ import { getBackupUvIndex, getUvIndex } from '../uvIndex';
 import { INVALID_LAT_LONG } from '../../UvCard/utils/constants';
 import { ISO_TIME_DELIMITER, STALE_TIME } from '../../utils/constants';
 import { getDateFromISO, getMaxUv, getTimeFromISO, getWeightedAverageUvIndex } from '../../UvCard/utils/helpers';
+import type { UvIndexHookData } from 'types';
 
 export const useUvIndex = (longitude: number, latitude: number) => {
   const getUvIndexAsync = async () => {
@@ -22,11 +23,12 @@ export const useUvIndex = (longitude: number, latitude: number) => {
     return {
       uv: getWeightedAverageUvIndex(now.uvi, forecast[0].uvi),
       maxUv,
-      maxUvTime: getTimeFromISO(time || ISO_TIME_DELIMITER)
+      maxUvTime: getTimeFromISO(time || ISO_TIME_DELIMITER),
+      currentDate: now.time.split(ISO_TIME_DELIMITER)[0]
     };
   };
 
-  return useQuery({
+  return useQuery<UvIndexHookData>({
     queryKey: ['uv-index', longitude, latitude],
     queryFn: getUvIndexAsync,
     enabled: latitude !== INVALID_LAT_LONG && longitude !== INVALID_LAT_LONG,

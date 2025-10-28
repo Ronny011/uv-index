@@ -137,7 +137,7 @@ export const UvText = styled.span`
   font-weight: bold;
   color: white;
   z-index: 1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  ${theme.textShadow}
 `;
 
 export const Body = styled.span<{ $topMargin?: number }>`

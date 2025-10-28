@@ -16,3 +16,11 @@ export type TemperatureResponse = {
 };
 
 export type TemperatureData = { current: number; dailyMin: number[]; dailyMax: number[] };
+
+export type UvIndexHookData = { uv: number; maxUv: number; maxUvTime: string; currentDate: string };
+
+export type MaxUvObject = {
+  maxUv: number;
+  maxUvTime: string;
+  date: string;
+};
