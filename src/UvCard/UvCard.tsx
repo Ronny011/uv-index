@@ -12,6 +12,7 @@ import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect, useState } from 'react';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
 import type { MaxUvObject } from 'types';
+import { useMountEffect } from 'hooks/useMountEffect';
 
 const wipeOldStorageRecords = (currentDate: string) => {
   Object.entries(localStorage).forEach(([key, value]) => {
@@ -40,27 +41,27 @@ export const UvCard = () => {
   } = useGetCardData();
   const { uv, maxUv, maxUvTime, currentDate } = uvIndexdata || UV_INDEX_EMPTY_STATE;
   const { town, city, country } = reverseGeolocation || {};
-  const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${town}`;
+  const townOrCity = town || city;
+  const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${townOrCity}`.replace(' ', '_');
 
-  const getLocalStorageMaxUv = (): MaxUvObject =>
-    JSON.parse(localStorage.getItem(localStorageKey) || JSON.stringify(UV_INDEX_EMPTY_STATE));
-
-  const updateCachedMaxUv = (maxUv: number, maxUvTime: string, date: string) => {
-    setCachedMaxUvObject(() => {
-      localStorage.setItem(localStorageKey, JSON.stringify({ maxUv, maxUvTime, date }));
-      return { maxUv, maxUvTime, date };
-    });
-  };
-
-  useEffect(() => wipeOldStorageRecords(currentDate), []);
+  useMountEffect(() => wipeOldStorageRecords(currentDate));
 
   useEffect(() => {
+    const getLocalStorageMaxUv = (): MaxUvObject =>
+      JSON.parse(localStorage.getItem(localStorageKey) || JSON.stringify(UV_INDEX_EMPTY_STATE));
+
+    const updateCachedMaxUv = (maxUv: number, maxUvTime: string, date: string) => {
+      setCachedMaxUvObject(() => {
+        localStorage.setItem(localStorageKey, JSON.stringify({ maxUv, maxUvTime, date }));
+        return { maxUv, maxUvTime, date };
+      });
+    };
+
     const { maxUv: localStorageMaxUv } = getLocalStorageMaxUv();
 
-    if (town) {
-      (!localStorageMaxUv || Number(localStorageMaxUv) < maxUv) && updateCachedMaxUv(maxUv, maxUvTime, currentDate);
-    }
-  }, [isUvIndexPeding, maxUv, maxUvTime, town]);
+    if (townOrCity && (!localStorageMaxUv || Number(localStorageMaxUv) < maxUv))
+      updateCachedMaxUv(maxUv, maxUvTime, currentDate);
+  }, [localStorageKey, townOrCity, maxUv, isUvIndexPeding, maxUvTime, currentDate]);
 
   switch (true) {
     case geolocationError && isReverseGeolocationError:
@@ -82,7 +83,7 @@ export const UvCard = () => {
         />
       ) : (
         <Body>
-          UV in {town || city}, {country}
+          UV in {townOrCity}, {country}
         </Body>
       )}
 
