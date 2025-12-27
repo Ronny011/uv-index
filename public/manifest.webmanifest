@@ -2,11 +2,11 @@
   "name": "UV Index",
   "short_name": "UV Index",
   "description": "Check the current UV index in your location",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#111827",
+  "background_color": "#f5f7fa",
+  "theme_color": "#f5f7fa",
   "orientation": "portrait-primary",
   "icons": [
     {

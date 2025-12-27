@@ -1,20 +1,16 @@
-import { Body, Chip, Flower, Indicator, UvText } from './UvCard.styles';
-import {
-  LOCALSTORAGE_MAX_UV_KEY,
-  LOW_UV_CUTOFF,
-  MAX_UV_OBJECT_EMPTY_STATE,
-  NOT_FOUND,
-  UV_INDEX_EMPTY_STATE
-} from './utils/constants';
+import { Body, Flower, Indicator, UvText } from './UvCard.styles';
+import { LOCALSTORAGE_MAX_UV_KEY, LOW_UV_CUTOFF, NOT_FOUND } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
 import { useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect, useState } from 'react';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
 import type { MaxUvObject } from 'types';
-import { useMountEffect } from 'hooks/useMountEffect';
+import { MaxUv } from './components/MaxUv';
 
-const wipeOldStorageRecords = (currentDate: string) => {
+const wipeOldStorageRecords = (currentDate: string | undefined) => {
+  if (!currentDate) return;
+
   Object.entries(localStorage).forEach(([key, value]) => {
     const parsedValue = JSON.parse(value) as MaxUvObject;
     const { date } = parsedValue;
@@ -23,8 +19,7 @@ const wipeOldStorageRecords = (currentDate: string) => {
 };
 
 export const UvCard = () => {
-  const [cachedMaxUvObject, setCachedMaxUvObject] = useState<MaxUvObject>(MAX_UV_OBJECT_EMPTY_STATE);
-  const { maxUv: cachedMaxUv, maxUvTime: cachedMaxUvTime } = cachedMaxUvObject;
+  const [maxUvState, setMaxUvState] = useState<MaxUvObject>();
 
   const {
     geolocationError,
@@ -39,28 +34,34 @@ export const UvCard = () => {
     longitude,
     latitude
   } = useGetCardData();
-  const { uv, maxUv, maxUvTime, currentDate } = uvIndexdata || UV_INDEX_EMPTY_STATE;
+  const { uv, maxUv, maxUvTime, currentDate } = uvIndexdata || {};
   const { town, city, country } = reverseGeolocation || {};
   const townOrCity = town || city;
   const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${townOrCity}`.replace(' ', '_');
 
-  useMountEffect(() => wipeOldStorageRecords(currentDate));
+  useEffect(() => wipeOldStorageRecords(currentDate), [currentDate]);
 
   useEffect(() => {
-    const getLocalStorageMaxUv = (): MaxUvObject =>
-      JSON.parse(localStorage.getItem(localStorageKey) || JSON.stringify(UV_INDEX_EMPTY_STATE));
+    const getLocalStorageMaxUv = (): MaxUvObject | undefined => {
+      const localStorageData = localStorage.getItem(localStorageKey);
 
-    const updateCachedMaxUv = (maxUv: number, maxUvTime: string, date: string) => {
-      setCachedMaxUvObject(() => {
+      if (!localStorageData) return;
+      return JSON.parse(localStorageData);
+    };
+
+    const updateCachedMaxUv = (maxUv: number | undefined, maxUvTime: string | undefined, date: string | undefined) => {
+      if (!maxUv || !maxUvTime || !date) return;
+
+      setMaxUvState(() => {
         localStorage.setItem(localStorageKey, JSON.stringify({ maxUv, maxUvTime, date }));
         return { maxUv, maxUvTime, date };
       });
     };
 
-    const { maxUv: localStorageMaxUv } = getLocalStorageMaxUv();
+    const { maxUv: localStorageMaxUv } = getLocalStorageMaxUv() || {};
+    const shouldUpdateLocalStorageMaxUv = !maxUvState || !localStorageMaxUv || localStorageMaxUv < (maxUv || 0);
 
-    if (townOrCity && (!localStorageMaxUv || Number(localStorageMaxUv) < maxUv))
-      updateCachedMaxUv(maxUv, maxUvTime, currentDate);
+    if (townOrCity && shouldUpdateLocalStorageMaxUv) updateCachedMaxUv(maxUv, maxUvTime, currentDate);
   }, [localStorageKey, townOrCity, maxUv, isUvIndexPeding, maxUvTime, currentDate]);
 
   switch (true) {
@@ -102,7 +103,7 @@ export const UvCard = () => {
               transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: EASE }
             }}
           >
-            <>{uv || Number.isInteger(uv) ? <UvText>{Number(uv.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
+            <>{Number.isInteger(uv) ? <UvText>{Number(uv?.toFixed(2))}</UvText> : <p>{NOT_FOUND}</p>}</>
           </Flower>
         )}
       </Indicator>
@@ -113,11 +114,7 @@ export const UvCard = () => {
           width={215}
         />
       ) : (
-        <Body>
-          Max UV today:
-          <Chip $isLowUv={Number(cachedMaxUv) < LOW_UV_CUTOFF}>{parseFloat(Number(cachedMaxUv).toFixed(2))}</Chip>
-          at {cachedMaxUvTime}
-        </Body>
+        <MaxUv maxUvObject={maxUvState} />
       )}
 
       <SecondaryInfo

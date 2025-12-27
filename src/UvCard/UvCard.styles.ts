@@ -2,8 +2,8 @@ import { motion } from 'motion/react';
 import styled from 'styled-components';
 import { theme } from 'utils/constants';
 
-const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
-const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
+export const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
+export const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
 
 export const Indicator = styled.div<{ $isLoading: boolean }>`
   margin: 45px;
@@ -147,13 +147,4 @@ export const Body = styled.span<{ $topMargin?: number }>`
   display: flex;
   align-items: center;
   gap: 5px;
-`;
-
-export const Chip = styled.div<{ $isLowUv: boolean }>`
-  background: ${({ $isLowUv }) => ($isLowUv ? GREEN_UV : RED_UV)};
-  color: white;
-  padding: 5px;
-  padding-inline: 10px;
-  border-radius: ${theme.borderRadius};
-  ${theme.boxShadow}
 `;

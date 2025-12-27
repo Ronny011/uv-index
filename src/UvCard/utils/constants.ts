@@ -1,5 +1,3 @@
-import type { MaxUvObject, UvIndexHookData } from 'types';
-
 export const INVALID_LAT_LONG = 0;
 export const NOT_FOUND = 'not found';
 
@@ -15,5 +13,3 @@ export enum AqiHealth {
 
 export const LOW_UV_CUTOFF = 4;
 export const LOCALSTORAGE_MAX_UV_KEY = 'uvMax';
-export const UV_INDEX_EMPTY_STATE: UvIndexHookData = { uv: 0, maxUv: 0, maxUvTime: '0', currentDate: '' };
-export const MAX_UV_OBJECT_EMPTY_STATE: MaxUvObject = { maxUv: 0, maxUvTime: '0', date: '' };
