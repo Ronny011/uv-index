@@ -37,7 +37,7 @@ export const UvCard = () => {
   const { uv, maxUv, maxUvTime, currentDate } = uvIndexdata || {};
   const { town, city, country } = reverseGeolocation || {};
   const townOrCity = town || city;
-  const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${townOrCity}`.replace(' ', '_');
+  const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${townOrCity}`.replaceAll(' ', '_');
 
   useEffect(() => wipeOldStorageRecords(currentDate), [currentDate]);
 
