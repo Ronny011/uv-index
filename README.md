@@ -2,6 +2,8 @@
 
 Quick and easy UV index info in your location.
 
+See it live: https://ronny011.github.io/uv-index/
+
 ![UV Index App](./Example.png)
 
 Want to decide whether you should put on some sun screen? Well, tough luck if you don't have a UV index indication in your weather app, and finding it online isn't any easier, having to sift through UV tables.
