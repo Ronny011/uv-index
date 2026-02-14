@@ -19,7 +19,7 @@ export const getAqiHealth = (aqi: number): AqiHealthObject => {
     case aqi >= 201 && aqi <= 300:
       return { message: AqiHealth.VeryUnhealthy, level: 4 };
 
-    case aqi >= 301 && aqi <= 500:
+    case aqi >= 301:
       return { message: AqiHealth.Hazardous, level: 5 };
 
     default:

@@ -62,7 +62,7 @@ export const UvCard = () => {
     const shouldUpdateLocalStorageMaxUv = !maxUvState || !localStorageMaxUv || localStorageMaxUv < (maxUv || 0);
 
     if (townOrCity && shouldUpdateLocalStorageMaxUv) updateCachedMaxUv(maxUv, maxUvTime, currentDate);
-  }, [localStorageKey, townOrCity, maxUv, isUvIndexPeding, maxUvTime, currentDate]);
+  }, [localStorageKey, townOrCity, maxUv, isUvIndexPeding, maxUvTime, currentDate, maxUvState]);
 
   switch (true) {
     case geolocationError && isReverseGeolocationError:
