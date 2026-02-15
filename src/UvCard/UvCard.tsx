@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
 import type { MaxUvObject } from 'types';
 import { MaxUv } from './components/MaxUv';
-import { useMaxUvLocalStorage } from './hooks/useMaxuvLocalStorage';
+import { useMaxUvLocalStorage } from './hooks/useMaxUvLocalStorage';
 
 const wipeOldStorageRecords = (currentDate: string | undefined) => {
   if (!currentDate) return;
