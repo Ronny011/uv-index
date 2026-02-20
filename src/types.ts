@@ -1,7 +1,7 @@
 export type UVI = { time: string; uvi: number };
 
 export type ReveseGeolocationResponse = {
-  address: { town?: string; city?: string; country: string };
+  address: { town?: string; city?: string; country: string; village: string };
 };
 
 export type BackupUvIndexResponse = { result: { uv: number; uv_max: number } };

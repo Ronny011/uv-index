@@ -34,10 +34,12 @@ export const UvCard = () => {
     latitude
   } = useGetCardData();
   const { uv, maxUv, maxUvTime, currentDate } = uvIndexdata || {};
-  const { town, city, country } = reverseGeolocation || {};
-  const townOrCity = town || city;
-  const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${townOrCity}`.replaceAll(' ', '_');
-  const { maxUvState } = useMaxUvLocalStorage({ localStorageKey, maxUv, maxUvTime, currentDate, townOrCity });
+  const { town, city, country, village } = reverseGeolocation || {};
+  const locationName = town || city || village;
+  const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${locationName}`.replaceAll(' ', '_');
+  const { maxUvState } = useMaxUvLocalStorage({ localStorageKey, maxUv, maxUvTime, currentDate, locationName });
+
+  const uvValue = uv?.toString() ? (Number.isInteger(uv) ? uv : uv.toFixed(2)) : undefined;
 
   useEffect(() => wipeOldStorageRecords(currentDate), [currentDate]);
 
@@ -61,7 +63,7 @@ export const UvCard = () => {
         />
       ) : (
         <Body>
-          UV in {townOrCity}, {country}
+          UV in {locationName}, {country}
         </Body>
       )}
 
@@ -80,7 +82,7 @@ export const UvCard = () => {
               transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: EASE }
             }}
           >
-            <>{uv?.toString() ? <UvText>{uv.toFixed(2)}</UvText> : <p>{NOT_FOUND}</p>}</>
+            <>{uvValue ? <UvText>{uvValue}</UvText> : <p>{NOT_FOUND}</p>}</>
           </Flower>
         )}
       </Indicator>

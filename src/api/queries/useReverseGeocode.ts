@@ -7,10 +7,6 @@ export const useReverseGeocode = (latitude: number, longitude: number) => {
   const getReverseGeolocationAsync = async () => {
     const result = await getReverseGeolocation(latitude, longitude);
 
-    if (!result || !result.data || !result.data.address) {
-      throw new Error('Not able to get revese geolocation');
-    }
-
     return result.data.address;
   };
 

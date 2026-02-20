@@ -6,10 +6,10 @@ type Props = {
   maxUv: number | undefined;
   maxUvTime: string | undefined;
   currentDate: string | undefined;
-  townOrCity: string | undefined;
+  locationName: string | undefined;
 };
 
-export const useMaxUvLocalStorage = ({ localStorageKey, maxUv, maxUvTime, currentDate, townOrCity }: Props) => {
+export const useMaxUvLocalStorage = ({ localStorageKey, maxUv, maxUvTime, currentDate, locationName }: Props) => {
   const [maxUvState, setMaxUvState] = useState<MaxUvObject>();
 
   useEffect(() => {
@@ -32,8 +32,8 @@ export const useMaxUvLocalStorage = ({ localStorageKey, maxUv, maxUvTime, curren
     const { maxUv: localStorageMaxUv } = getLocalStorageMaxUv() || {};
     const shouldUpdateLocalStorageMaxUv = !maxUvState || !localStorageMaxUv || localStorageMaxUv < (maxUv || 0);
 
-    if (townOrCity && shouldUpdateLocalStorageMaxUv) updateCachedMaxUv(maxUv, maxUvTime, currentDate);
-  }, [localStorageKey, townOrCity, maxUv, maxUvTime, currentDate]);
+    if (locationName && shouldUpdateLocalStorageMaxUv) updateCachedMaxUv(maxUv, maxUvTime, currentDate);
+  }, [localStorageKey, locationName, maxUv, maxUvTime, currentDate]);
 
   return { maxUvState };
 };
