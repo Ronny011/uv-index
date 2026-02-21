@@ -7,7 +7,7 @@ export const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
 
 export const Indicator = styled.div<{ $isLoading: boolean }>`
   margin: 45px;
-  filter: ${({ $isLoading }) => ($isLoading ? 'none' : 'drop-shadow(0 0 15px rgba(0, 0, 0, 0.21))')};
+  /* filter: ${({ $isLoading }) => ($isLoading ? 'none' : 'drop-shadow(0 0 15px rgba(0, 0, 0, 0.21))')}; */
 `;
 
 export const Flower = styled(motion.div)<{ $isLowUv: boolean }>`
