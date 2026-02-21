@@ -1,7 +1,7 @@
 import { type FC } from 'react';
-import { Body } from 'UvCard/UvCard.styles';
+import { Body } from '../../UvCard.styles';
 import { Chip } from './MaxUv.styles';
-import { LOW_UV_CUTOFF } from 'UvCard/utils/constants';
+import { LOW_UV_CUTOFF } from '../../utils/constants';
 import type { MaxUvObject } from 'types';
 
 export const MaxUv: FC<{ maxUvObject: MaxUvObject | undefined }> = ({ maxUvObject }) => {

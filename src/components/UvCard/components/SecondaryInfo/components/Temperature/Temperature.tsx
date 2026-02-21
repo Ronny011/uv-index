@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import type { TemperatureData } from 'types';
-import { Skeleton } from 'UvCard/components/Skeleton';
+import { Skeleton } from '../../../Skeleton';
 import { LimitTemperature, MainTemperature, TemperaturesFlexWrapper } from './Temperature.styles';
 
 interface Props {

@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import { airQualityLevelMutedColors, LevelBlock, Scale } from './AirQualityScale.styles';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
-import { Skeleton } from 'UvCard/components/Skeleton';
+import { Skeleton } from '../../../Skeleton';
 
 interface Props {
   aqi: number;

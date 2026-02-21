@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { airQualityIndex } from '../airQualityIndex';
 import { STALE_TIME } from '../../utils/constants';
-import { INVALID_LAT_LONG } from '../../UvCard/utils/constants';
+import { INVALID_LAT_LONG } from 'components/UvCard/utils/constants';
 
 export const useAirQualityIndex = (latitude: number, longitude: number) => {
   const airQualityIndexAsync = async () => {

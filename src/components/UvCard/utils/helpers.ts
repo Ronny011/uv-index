@@ -1,5 +1,5 @@
-import type { UVI } from '../../types';
-import { ISO_TIME_DELIMITER } from '../../utils/constants';
+import type { UVI } from 'types';
+import { ISO_TIME_DELIMITER } from 'utils/constants';
 
 export const getWeightedAverageUvIndex = (thisHourIndex: number, nextHourIndex: number) => {
   const currentMinutes = new Date().getMinutes();

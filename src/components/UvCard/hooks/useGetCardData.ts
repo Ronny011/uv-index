@@ -1,6 +1,6 @@
-import { useReverseGeocode } from '../../api/queries/useReverseGeocode';
-import { useUvIndex } from '../../api/queries/useUvIndex';
+import { useReverseGeocode } from 'queries/useReverseGeocode';
 import { useGetGeolocation } from './useGetGeolocation';
+import { useUvIndex } from 'queries/useUvIndex';
 
 export const useGetCardData = () => {
   const { latitude, longitude, geolocationError } = useGetGeolocation();

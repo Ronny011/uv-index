@@ -39,7 +39,7 @@ export const UvCard = () => {
   const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${locationName}`.replaceAll(' ', '_');
   const { maxUvState } = useMaxUvLocalStorage({ localStorageKey, maxUv, maxUvTime, currentDate, locationName });
 
-  const uvValue = uv?.toString() ? (Number.isInteger(uv) ? uv : uv.toFixed(2)) : undefined;
+  const UvValue = uv?.toString() ? <UvText>{Number.isInteger(uv) ? uv : uv.toFixed(2)}</UvText> : <p>{NOT_FOUND}</p>;
 
   useEffect(() => wipeOldStorageRecords(currentDate), [currentDate]);
 
@@ -82,7 +82,7 @@ export const UvCard = () => {
               transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: EASE }
             }}
           >
-            <>{uvValue ? <UvText>{uvValue}</UvText> : <p>{NOT_FOUND}</p>}</>
+            {UvValue}
           </Flower>
         )}
       </Indicator>

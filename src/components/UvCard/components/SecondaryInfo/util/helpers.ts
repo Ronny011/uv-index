@@ -1,4 +1,4 @@
-import { AqiHealth } from 'UvCard/utils/constants';
+import { AqiHealth } from '../../../utils/constants';
 
 type AqiHealthObject = { message: string; level: number };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { theme } from 'utils/constants';
-import { GREEN_UV, RED_UV } from 'UvCard/UvCard.styles';
+import { GREEN_UV, RED_UV } from '../../UvCard.styles';
 
 export const Chip = styled.div<{ $isLowUv: boolean }>`
   background: ${({ $isLowUv }) => ($isLowUv ? GREEN_UV : RED_UV)};
