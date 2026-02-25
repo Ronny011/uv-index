@@ -150,6 +150,9 @@ export const Body = styled.span<{ $topMargin?: number }>`
 `;
 
 export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
   padding: 20px;
   border-radius: 20px;
@@ -157,6 +160,5 @@ export const Wrapper = styled.div`
   box-shadow:
     0 8px 32px 0 rgba(0, 0, 0, 0.1),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
-  position: relative;
   backdrop-filter: blur(4px);
 `;
