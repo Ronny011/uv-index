@@ -1,3 +1,3 @@
 export const LocationBar = () => {
-  return <></>;
+  return <button>Change city</button>;
 };

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from 'utils/constants';
 
 export const TemperaturesFlexWrapper = styled.div`
   display: flex;
@@ -7,9 +6,7 @@ export const TemperaturesFlexWrapper = styled.div`
   align-items: center;
 `;
 
-export const MainTemperature = styled.h2`
-  ${theme.textShadow}
-`;
+export const MainTemperature = styled.h2``;
 
 export const LimitTemperature = styled.div`
   display: flex;

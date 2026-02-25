@@ -1,4 +1,4 @@
-import { Body, Flower, Indicator, UvText } from './UvCard.styles';
+import { Body, Flower, Indicator, UvText, Wrapper } from './UvCard.styles';
 import { LOCALSTORAGE_MAX_UV_KEY, LOW_UV_CUTOFF, NOT_FOUND } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
 import { useGetCardData } from './hooks/useGetCardData';
@@ -53,7 +53,7 @@ export const UvCard = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       {isReverseGeolocationPending ? (
         <Skeleton
           height={24}
@@ -98,6 +98,6 @@ export const UvCard = () => {
         longitude={longitude}
         latitude={latitude}
       />
-    </>
+    </Wrapper>
   );
 };

@@ -8,5 +8,4 @@ export const Chip = styled.div<{ $isLowUv: boolean }>`
   padding: 5px;
   padding-inline: 10px;
   border-radius: ${theme.borderRadius};
-  ${theme.boxShadow}
 `;

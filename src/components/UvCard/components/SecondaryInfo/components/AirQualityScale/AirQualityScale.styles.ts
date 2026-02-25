@@ -26,10 +26,11 @@ export const Scale = styled.div`
 
 export const LevelBlock = styled(motion.div)<{ color: string; index: number; isCorrespondingBlock: boolean }>(
   ({ color, index, isCorrespondingBlock }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: ${isCorrespondingBlock ? airQualityLevelStrongColors[index] : color};
     color: white;
-    text-align: center;
     border-radius: ${firstBlock(index)} ${lastBlock(index)} ${lastBlock(index)} ${firstBlock(index)};
-    ${isCorrespondingBlock && theme.boxShadow}
   `
 );
