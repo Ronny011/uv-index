@@ -10,6 +10,8 @@
   --g: radial-gradient(#000 calc(71% - 1px), #0000 71%) no-repeat;
   --bg-g-start: #f5f7fa;
   --bg-g-end: #c3cfe2;
+
+  line-height: 1;
 }
 
 body {

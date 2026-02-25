@@ -24,11 +24,9 @@ export const UvCard = () => {
     geolocationError,
     reverseGeolocation,
     isReverseGeolocationPending,
-    isReverseGeolocationError,
     reverseGeolocationError,
     uvIndexdata,
     isUvIndexPeding,
-    isUvIndexError,
     uvIndexError,
     longitude,
     latitude
@@ -44,13 +42,13 @@ export const UvCard = () => {
   useEffect(() => wipeOldStorageRecords(currentDate), [currentDate]);
 
   switch (true) {
-    case geolocationError && isReverseGeolocationError:
+    case geolocationError && Boolean(reverseGeolocationError):
       return <Body>{geolocationError}</Body>;
 
-    case isReverseGeolocationError:
+    case Boolean(reverseGeolocationError):
       return <Body>{reverseGeolocationError?.message}</Body>;
 
-    case isUvIndexError:
+    case Boolean(uvIndexError):
       return <Body>{uvIndexError?.message}</Body>;
   }
 

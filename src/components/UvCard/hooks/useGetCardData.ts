@@ -7,27 +7,19 @@ export const useGetCardData = () => {
 
   const {
     data: reverseGeolocation,
-    isError: isReverseGeolocationError,
     isPending: isReverseGeolocationPending,
     error: reverseGeolocationError
   } = useReverseGeocode(latitude, longitude);
 
-  const {
-    data: uvIndexdata,
-    isError: isUvIndexError,
-    isPending: isUvIndexPeding,
-    error: uvIndexError
-  } = useUvIndex(latitude, longitude);
+  const { data: uvIndexdata, isPending: isUvIndexPeding, error: uvIndexError } = useUvIndex(latitude, longitude);
 
   return {
     geolocationError,
     reverseGeolocation,
     isReverseGeolocationPending,
-    isReverseGeolocationError,
     reverseGeolocationError,
     uvIndexdata,
     isUvIndexPeding,
-    isUvIndexError,
     uvIndexError,
     longitude,
     latitude

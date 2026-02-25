@@ -1,5 +1,4 @@
 import { type FC } from 'react';
-import { Body } from '../../UvCard.styles';
 import { FlexWrapper } from './SecondaryInfo.styles';
 import { useGetSecondaryInfo } from './hooks/useGetSecondaryInfo';
 import { AirQualityScale } from './components/AirQualityScale';
@@ -15,28 +14,26 @@ export const SecondaryInfo: FC<Props> = ({ latitude, longitude }) => {
   const {
     airQualityIndex,
     isAirQualityIndexPending,
-    isAirQualityIndexError,
     airQualityError,
     temperatureData,
     isTemperaturePending,
-    isTemperatureError,
     temperatureError
   } = useGetSecondaryInfo(latitude, longitude);
   const aqi = airQualityIndex?.aqi || 0;
 
   return (
     <FlexWrapper>
-      <Body>{isAirQualityIndexError ? airQualityError?.message : 'Air quality'}</Body>
       <AirQualityScale
         aqi={aqi}
         qualityLevel={getAqiHealth(aqi).level}
         isloading={isAirQualityIndexPending}
+        error={airQualityError}
       />
 
-      <Body>{isTemperatureError ? temperatureError?.message : `Temperature`}</Body>
       <Temperature
         temperatureData={temperatureData}
         isLoading={isTemperaturePending}
+        error={temperatureError}
       />
     </FlexWrapper>
   );
