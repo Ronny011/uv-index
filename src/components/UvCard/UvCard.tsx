@@ -32,6 +32,7 @@ export const UvCard = () => {
     latitude
   } = useGetCardData();
   const { uv, maxUv, maxUvTime, currentDate } = uvIndexdata || {};
+
   const { town, city, country, village } = reverseGeolocation || {};
   const locationName = town || city || village;
   const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${locationName}`.replaceAll(' ', '_');

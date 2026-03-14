@@ -14,11 +14,11 @@ export const useUvIndex = (longitude: number, latitude: number) => {
       throw new Error('Was not able to get UV index');
     }
 
-    const unifiedDataForToday = [...forecast, ...history].filter(
+    const todaysReadings = [...forecast, now, ...history].filter(
       ({ time }) => getDateFromISO(time) === getDateFromISO(now.time)
     );
-    const maxUv = getMaxUv(now.uvi, unifiedDataForToday);
-    const { time } = unifiedDataForToday.find((reading) => reading.uvi === maxUv) || {};
+    const maxUv = getMaxUv(now.uvi, todaysReadings);
+    const { time } = todaysReadings.find((reading) => reading.uvi === maxUv) || {};
 
     return {
       uv: getWeightedAverageUvIndex(now.uvi, forecast[0].uvi),

@@ -1,6 +1,7 @@
+import { commonWrapper } from 'App.styles';
 import { motion } from 'motion/react';
 import styled from 'styled-components';
-import { theme } from 'utils/constants';
+import { APP_HEIGHT, theme } from 'utils/constants';
 
 export const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
 export const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
@@ -153,12 +154,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
   padding: 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
+  height: ${APP_HEIGHT}px;
+
+  ${commonWrapper}
 `;

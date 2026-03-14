@@ -24,12 +24,12 @@ export const Scale = styled.div`
   border-radius: ${theme.borderRadius};
 `;
 
-export const LevelBlock = styled(motion.div)<{ color: string; index: number; isCorrespondingBlock: boolean }>(
-  ({ color, index, isCorrespondingBlock }) => css`
+export const LevelBlock = styled(motion.div)<{ color: string; index: number; $isActiveBlock: boolean }>(
+  ({ color, index, $isActiveBlock }) => css`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${isCorrespondingBlock ? airQualityLevelStrongColors[index] : color};
+    background-color: ${$isActiveBlock ? airQualityLevelStrongColors[index] : color};
     color: white;
     border-radius: ${firstBlock(index)} ${lastBlock(index)} ${lastBlock(index)} ${firstBlock(index)};
   `

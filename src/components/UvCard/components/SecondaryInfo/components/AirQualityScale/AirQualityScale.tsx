@@ -33,15 +33,15 @@ export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel, isloading, error
 
       <Scale>
         {airQualityLevelMutedColors.map((color, index) => {
-          const isCorrespondingBlock = qualityLevel === index;
+          const isActiveBlock = qualityLevel === index;
           return (
             <LevelBlock
               key={color}
               color={color}
               index={index}
-              isCorrespondingBlock={isCorrespondingBlock}
+              $isActiveBlock={isActiveBlock}
               animate={{
-                scale: isCorrespondingBlock ? 1.3 : 1,
+                scale: isActiveBlock ? 1.3 : 1,
                 transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: EASE }
               }}
             >
