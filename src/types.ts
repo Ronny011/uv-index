@@ -24,3 +24,11 @@ export type MaxUvObject = {
   maxUvTime: string;
   date: string;
 };
+
+export type SettlementResponse = {
+  lat: number;
+  lon: number;
+  name: string;
+  place_id: number;
+  display_name: string;
+};

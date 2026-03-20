@@ -1,18 +1,23 @@
-import { Body, Flower, Indicator, UvText, Wrapper } from './UvCard.styles';
+import { Body, Flower, Indicator, UvText } from './UvCard.styles';
 import { LOCALSTORAGE_MAX_UV_KEY, LOW_UV_CUTOFF, NOT_FOUND } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
-import { useGetCardData } from './hooks/useGetCardData';
+import { SELECTED_LOCATION_KEY, useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect } from 'react';
 import { EASE, TRANSITION_TIME } from 'utils/constants';
 import type { MaxUvObject } from 'types';
 import { MaxUv } from './components/MaxUv';
 import { useMaxUvLocalStorage } from './hooks/useMaxUvLocalStorage';
+import { SETTLEMENTS_KEY } from 'components/AddSettlement/utils/helpers';
+
+const keysToExclude = [SETTLEMENTS_KEY, SELECTED_LOCATION_KEY];
 
 const wipeOldStorageRecords = (currentDate: string | undefined) => {
   if (!currentDate) return;
 
   Object.entries(localStorage).forEach(([key, value]) => {
+    if (keysToExclude.includes(key)) return;
+
     const parsedValue = JSON.parse(value) as MaxUvObject;
     const { date } = parsedValue;
     if (date !== currentDate) localStorage.removeItem(key);
@@ -54,7 +59,7 @@ export const UvCard = () => {
   }
 
   return (
-    <Wrapper>
+    <>
       {isReverseGeolocationPending ? (
         <Skeleton
           height={24}
@@ -99,6 +104,6 @@ export const UvCard = () => {
         longitude={longitude}
         latitude={latitude}
       />
-    </Wrapper>
+    </>
   );
 };

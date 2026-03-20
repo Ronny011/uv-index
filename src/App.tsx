@@ -1,16 +1,16 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Page } from './App.styles';
+import { ContentWrapper, Page } from './App.styles';
 import { UvCard } from 'components/UvCard';
 import { Navigator } from 'components/Navigator';
 import { useState } from 'react';
-import { AddCity } from 'components/AddCity';
-import { ChangeCity } from 'components/ChangeCity';
+import { AddSettlement } from 'components/AddSettlement';
+import { ChangeSettlement } from 'components/ChangeSettlement';
 
-export type CardMode = 'changeCity' | 'addCity' | 'uv';
+export type CardMode = 'changeSettlement' | 'addSettlement' | 'uv';
 
 const cardModeToComponent: Record<CardMode, () => React.JSX.Element> = {
-  addCity: AddCity,
-  changeCity: ChangeCity,
+  addSettlement: AddSettlement,
+  changeSettlement: ChangeSettlement,
   uv: UvCard
 };
 
@@ -18,16 +18,17 @@ const queryClient = new QueryClient();
 
 function App() {
   const [cardMode, setCardMode] = useState<CardMode>('uv');
-  // const Component = cardModeToComponent[cardMode];
-  const Component = cardModeToComponent.uv;
+  const Component = cardModeToComponent[cardMode];
 
   const handleModeChange = (mode: CardMode) => setCardMode(mode);
 
   return (
     <QueryClientProvider client={queryClient}>
       <Page>
-        {/* <Navigator onNavigate={handleModeChange} /> */}
-        <Component />
+        <Navigator onNavigate={handleModeChange} />
+        <ContentWrapper>
+          <Component />
+        </ContentWrapper>
       </Page>
     </QueryClientProvider>
   );

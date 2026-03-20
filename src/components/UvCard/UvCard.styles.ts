@@ -1,7 +1,6 @@
-import { commonWrapper } from 'App.styles';
 import { motion } from 'motion/react';
 import styled from 'styled-components';
-import { APP_HEIGHT, theme } from 'utils/constants';
+import { theme } from 'utils/constants';
 
 export const GREEN_UV = 'linear-gradient(60deg, #56ab2f, #a8e063)';
 export const RED_UV = 'linear-gradient(60deg, #ed303c, #ff9c5b);';
@@ -148,14 +147,4 @@ export const Body = styled.span<{ $topMargin?: number }>`
   display: flex;
   align-items: center;
   gap: 5px;
-`;
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  height: ${APP_HEIGHT}px;
-
-  ${commonWrapper}
 `;

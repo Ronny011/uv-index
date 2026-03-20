@@ -1,12 +1,17 @@
+import type { FC } from 'react';
 import { ButtonsWrapper, Button, Root } from './Navigator.styles';
 import type { CardMode } from 'App';
 
-export const Navigator = ({ onNavigate }: { onNavigate: (mode: CardMode) => void }) => {
+type Props = {
+  onNavigate: (mode: CardMode) => void;
+};
+
+export const Navigator: FC<Props> = ({ onNavigate }) => {
   return (
     <Root>
       <ButtonsWrapper>
-        <Button onClick={() => onNavigate('changeCity')}>Change city</Button>
-        <Button onClick={() => onNavigate('addCity')}>Add city</Button>
+        <Button onClick={() => onNavigate('changeSettlement')}>Change location</Button>
+        <Button onClick={() => onNavigate('addSettlement')}>Add location</Button>
         <Button onClick={() => onNavigate('uv')}>UV</Button>
       </ButtonsWrapper>
     </Root>
