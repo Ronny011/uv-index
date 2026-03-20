@@ -6,7 +6,6 @@ export const FlexBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 25px;
-  margin-top: 100px;
 `;
 
 export const Message = styled.p`

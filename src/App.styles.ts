@@ -32,6 +32,7 @@ export const ContentWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   padding: 20px;
   height: ${APP_HEIGHT}px;
   width: ${APP_WIDTH}px;

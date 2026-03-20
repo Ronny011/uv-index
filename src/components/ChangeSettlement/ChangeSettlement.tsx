@@ -9,12 +9,20 @@ import { DeleteButton } from 'components/DeleteButton';
 import { Message } from 'components/AddSettlement/AddSettlement.styles';
 import { useState } from 'react';
 
+const RESERVED_ID = 3;
+const DEFAULT_LOCATION_OPTION: SettlementLocalStorage = { id: 3, lat: 0, lon: 0, name: 'Device location' };
+
 export const ChangeSettlement = () => {
   const [showMessage, setShowMessage] = useState(false);
 
-  const settlements = getSettlementsFromLocalStorage();
+  const settlements = [DEFAULT_LOCATION_OPTION, ...getSettlementsFromLocalStorage()];
 
   const handleSettlementClick = (settlement: SettlementLocalStorage) => {
+    if (settlement.id === RESERVED_ID) {
+      localStorage.removeItem(SELECTED_LOCATION_KEY);
+      return;
+    }
+
     localStorage.setItem(SELECTED_LOCATION_KEY, JSON.stringify(settlement));
 
     setShowMessage(true);
@@ -37,14 +45,9 @@ export const ChangeSettlement = () => {
       {settlements.length > 0 ? (
         <SettlementsList>
           {settlements.map((settlement) => (
-            <ListItemWrapper>
-              <Settlement
-                key={settlement.name}
-                onClick={() => handleSettlementClick(settlement)}
-              >
-                {settlement.name}
-              </Settlement>
-              <DeleteButton onClick={() => handleSettlementDelete(settlement.id)} />
+            <ListItemWrapper key={settlement.id}>
+              <Settlement onClick={() => handleSettlementClick(settlement)}>{settlement.name}</Settlement>
+              {settlement.id !== RESERVED_ID && <DeleteButton onClick={() => handleSettlementDelete(settlement.id)} />}
             </ListItemWrapper>
           ))}
         </SettlementsList>

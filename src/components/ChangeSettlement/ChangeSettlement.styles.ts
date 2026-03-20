@@ -25,8 +25,6 @@ export const Settlement = styled.li`
 export const FlexWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
   overflow-y: scroll;
   gap: 25px;
@@ -36,5 +34,5 @@ export const ListItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 120px;
+  gap: 15px;
 `;
