@@ -4,7 +4,7 @@ Quick and easy UV index info in your location.
 
 See it live: https://ronny011.github.io/uv-index/
 
-![UV Index App](./Example.png)
+![UV Index App](./public/images/example.png)
 
 Want to decide whether you should put on some sun screen? Well, tough luck if you don't have a UV index indication in your weather app, and finding it online isn't any easier, having to sift through UV tables.
 
@@ -12,4 +12,24 @@ With this UV index app you get a quick glance at the current UV index, and today
 
 Also, hourly changes can be pretty significant, so the hourly index indication might not be enough. This is why we are actually using a weighted average, which should be more accurate.
 
-To give a better 'big picture' view of the weather, we have added Air Quality Index, and Temperature.
+To give a better 'big picture' view of the weather, we have added Air Quality Index, and Temperature as well.
+
+## Development
+
+This project uses `bun` as the package manager.
+
+Install dependencies:
+
+`bun install --frozen-lockfile`
+
+Run locally:
+
+`bun run dev`
+
+Build:
+
+`bun run build`
+
+Lint:
+
+`bun run lint`
