@@ -1,23 +1,26 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 import { ButtonsWrapper, Button, Root } from './Navigator.styles';
 import type { CardMode } from 'App';
 import EditPencilIcon from '../../assets/icons/edit-pencil.svg?react';
-import GlobeIcon from '../../assets/icons/globe.svg?react';
-import PlusIcon from '../../assets/icons/plus.svg?react';
-import SunIcon from '../../assets/icons/sun.svg?react';
+import { usePersistSettlements } from 'store/usePersistSettlements';
+import { GlobeIcon, PlusIcon, SunIcon } from 'assets/icons';
 
 type Props = {
   onNavigate: (mode: CardMode) => void;
 };
 
 export const Navigator: FC<Props> = ({ onNavigate }) => {
+  const settlements = usePersistSettlements((state) => state.settlements);
+
   return (
     <Root>
       <ButtonsWrapper>
-        <Button onClick={() => onNavigate('changeSettlement')}>
-          <EditPencilIcon />
-          <GlobeIcon />
-        </Button>
+        {settlements.length > 1 && (
+          <Button onClick={() => onNavigate('changeSettlement')}>
+            <EditPencilIcon />
+            <GlobeIcon />
+          </Button>
+        )}
         <Button onClick={() => onNavigate('addSettlement')}>
           <PlusIcon />
           <GlobeIcon />

@@ -8,7 +8,7 @@ import { EASE, TRANSITION_TIME } from 'utils/constants';
 import type { MaxUvObject } from 'types';
 import { MaxUv } from './components/MaxUv';
 import { useMaxUvLocalStorage } from './hooks/useMaxUvLocalStorage';
-import { SETTLEMENTS_KEY } from 'components/AddSettlement/utils/helpers';
+import { SETTLEMENTS_KEY } from 'store/usePersistSettlements';
 
 const keysToExclude = [SETTLEMENTS_KEY, SELECTED_LOCATION_KEY];
 
