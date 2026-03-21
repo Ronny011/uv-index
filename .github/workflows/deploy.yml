@@ -1,6 +1,7 @@
 name: Deploy to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -38,6 +39,7 @@ jobs:
           VITE_OPEN_UV_API_KEY: ${{ secrets.VITE_OPEN_UV_API_KEY }}
           VITE_OPEN_UV_API_BASE_URL: ${{ secrets.VITE_OPEN_UV_API_BASE_URL }}
           VITE_LESS_STRICT_UV_INDEX_API_BASE_URL: ${{ secrets.VITE_LESS_STRICT_UV_INDEX_API_BASE_URL }}
+          VITE_MULTI_LOCATION_BASE_URL: ${{ secrets.VITE_MULTI_LOCATION_BASE_URL }}
           VITE_TEMPERATURE_API_BASE_URL: ${{ secrets.VITE_TEMPERATURE_API_BASE_URL }}
           VITE_AIR_QUALITY_INDEX_API_TOKEN: ${{ secrets.VITE_AIR_QUALITY_INDEX_API_TOKEN }}
           VITE_AIR_QUALITY_IDEX_API_BASE_URL: ${{ secrets.VITE_AIR_QUALITY_IDEX_API_BASE_URL }}
