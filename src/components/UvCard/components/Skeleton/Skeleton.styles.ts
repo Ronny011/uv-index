@@ -6,13 +6,14 @@ const shimmer = keyframes`
     }
 `;
 
-export const Loader = styled.div<{ height: number; width: number; $isRound: boolean }>(
-  ({ height, width, $isRound }) => css`
+export const Loader = styled.div<{ height: number; width: number; $isRound: boolean; $margin: string }>(
+  ({ height, width, $isRound, $margin }) => css`
     position: relative;
     height: ${height}px;
     width: ${width}px;
     background-color: #dddbdd;
     border-radius: ${$isRound ? '50%' : '5px'};
+    margin: ${$margin};
     overflow: hidden;
 
     &::after {

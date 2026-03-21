@@ -11,11 +11,12 @@ type Props = {
 
 export const Navigator: FC<Props> = ({ onNavigate }) => {
   const settlements = usePersistSettlements((state) => state.settlements);
+  const shouldShowChangeSettlements = settlements.length > 1;
 
   return (
     <Root>
-      <ButtonsWrapper>
-        {settlements.length > 1 && (
+      <ButtonsWrapper $hasExtraButton={shouldShowChangeSettlements}>
+        {shouldShowChangeSettlements && (
           <Button onClick={() => onNavigate('changeSettlement')}>
             <EditPencilIcon />
             <GlobeIcon />

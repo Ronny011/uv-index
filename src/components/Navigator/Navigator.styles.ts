@@ -1,5 +1,5 @@
 import { commonWrapper } from 'App.styles';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { theme } from 'utils/constants';
 
 export const Root = styled.nav`
@@ -14,6 +14,7 @@ export const Button = styled.button`
   display: flex;
   gap: 5px;
   transition: color 0.15s ease;
+  justify-content: center;
 
   @media (hover: hover) {
     &:hover {
@@ -27,8 +28,18 @@ export const Button = styled.button`
   }
 `;
 
-export const ButtonsWrapper = styled.div`
+export const ButtonsWrapper = styled.div<{ $hasExtraButton: boolean }>`
   cursor: pointer;
-  display: flex;
+  display: grid;
   gap: 10px;
+  ${({ $hasExtraButton }) => dynamicGridTemplateRows($hasExtraButton)}
 `;
+
+const dynamicGridTemplateRows = (hasExtraButton: boolean) =>
+  hasExtraButton
+    ? css`
+        grid-template-columns: repeat(3, 1fr);
+      `
+    : css`
+        grid-template-columns: repeat(2, 1fr);
+      `;

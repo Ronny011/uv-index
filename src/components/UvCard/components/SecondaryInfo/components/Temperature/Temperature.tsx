@@ -19,7 +19,7 @@ export const Temperature: FC<Props> = ({ isLoading, temperatureData, error }) =>
           width={105}
         />
         <Skeleton
-          height={24}
+          height={32}
           width={157}
         />
       </>

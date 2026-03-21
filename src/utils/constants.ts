@@ -13,4 +13,4 @@ export const TRANSITION_TIME = 0.3;
 export const EASE = 'easeInOut';
 
 export const APP_WIDTH = 250;
-export const APP_HEIGHT = 517;
+export const APP_HEIGHT = 360;

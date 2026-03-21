@@ -20,7 +20,7 @@ export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel, isloading, error
           width={85}
         />
         <Skeleton
-          height={24}
+          height={20}
           width={245}
         />
       </>

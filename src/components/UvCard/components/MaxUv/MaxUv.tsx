@@ -9,7 +9,7 @@ export const MaxUv: FC<{ maxUvObject: MaxUvObject | undefined }> = ({ maxUvObjec
 
   return (
     <Body>
-      Max UV today:
+      Today's max
       <Chip $isLowUv={Number(maxUv) < LOW_UV_CUTOFF}>{String(parseFloat(Number(maxUv).toFixed(2)))}</Chip>
       at {maxUvTime}
     </Body>

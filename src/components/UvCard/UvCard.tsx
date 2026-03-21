@@ -1,10 +1,11 @@
-import { Body, Flower, Indicator, UvText } from './UvCard.styles';
-import { LOCALSTORAGE_MAX_UV_KEY, LOW_UV_CUTOFF, NOT_FOUND } from './utils/constants';
+import { Body } from './UvCard.styles';
+import { UvMeter } from './components/UvMeter';
+import { LOCALSTORAGE_MAX_UV_KEY } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
 import { SELECTED_LOCATION_KEY, useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect } from 'react';
-import { EASE, TRANSITION_TIME } from 'utils/constants';
+
 import type { MaxUvObject } from 'types';
 import { MaxUv } from './components/MaxUv';
 import { useMaxUvLocalStorage } from './hooks/useMaxUvLocalStorage';
@@ -43,8 +44,6 @@ export const UvCard = () => {
   const localStorageKey = `${LOCALSTORAGE_MAX_UV_KEY}_${locationName}`.replaceAll(' ', '_');
   const { maxUvState } = useMaxUvLocalStorage({ localStorageKey, maxUv, maxUvTime, currentDate, locationName });
 
-  const UvValue = uv?.toString() ? <UvText>{Number.isInteger(uv) ? uv : uv.toFixed(2)}</UvText> : <p>{NOT_FOUND}</p>;
-
   useEffect(() => wipeOldStorageRecords(currentDate), [currentDate]);
 
   switch (true) {
@@ -67,33 +66,23 @@ export const UvCard = () => {
         />
       ) : (
         <Body>
-          UV in {locationName}, {country}
+          {locationName}, {country}
         </Body>
       )}
 
-      <Indicator $isLoading={isUvIndexPeding}>
-        {isUvIndexPeding ? (
-          <Skeleton
-            height={200}
-            width={200}
-            isRound
-          />
-        ) : (
-          <Flower
-            $isLowUv={Number(uv) < LOW_UV_CUTOFF}
-            animate={{
-              rotate: 360,
-              transition: { delay: TRANSITION_TIME, duration: TRANSITION_TIME, ease: EASE }
-            }}
-          >
-            {UvValue}
-          </Flower>
-        )}
-      </Indicator>
+      {isUvIndexPeding ? (
+        <Skeleton
+          height={120}
+          width={200}
+          margin='10px 0'
+        />
+      ) : (
+        <UvMeter uv={uv} />
+      )}
 
       {isUvIndexPeding ? (
         <Skeleton
-          height={34}
+          height={28}
           width={215}
         />
       ) : (
