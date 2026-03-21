@@ -30,11 +30,23 @@ export const SettlementsList = styled.ul`
 export const Settlement = styled.li`
   cursor: pointer;
   border: 1px solid transparent;
-  padding: 5px;
+  padding: 8px;
   border-radius: 4px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease;
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      border: 1px solid #ccc;
+    }
+  }
+
+  &:active {
     border: 1px solid #ccc;
+    opacity: 0.7;
   }
 `;
 
@@ -42,17 +54,32 @@ export const Input = styled.input`
   all: unset;
   border: 3px solid ${theme.primary};
   border-radius: 4px;
-  padding: 5px;
+  padding: 10px;
+  min-height: 44px;
+  box-sizing: border-box;
+  font-size: 16px;
 `;
 
 export const Button = styled.button`
   all: unset;
   background-color: ${theme.primary};
-  padding: 10px;
+  padding: 12px 20px;
   border-radius: 4px;
   cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+  transition:
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      ${theme.boxShadow}
+    }
+  }
+
+  &:active {
     ${theme.boxShadow}
+    opacity: 0.7;
   }
 `;

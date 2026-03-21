@@ -14,11 +14,19 @@ export const SettlementsList = styled.ul`
 export const Settlement = styled.li`
   cursor: pointer;
   border: 1px solid transparent;
-  padding: 5px;
+  padding: 8px;
   border-radius: 4px;
+  transition: border-color 0.15s ease;
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      border: 1px solid #ccc;
+    }
+  }
+
+  &:active {
     border: 1px solid #ccc;
+    opacity: 0.7;
   }
 `;
 

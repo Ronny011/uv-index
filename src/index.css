@@ -18,6 +18,8 @@ body {
   font-family: 'AlanSans', 'Segoe UI', sans-serif;
   max-height: 100vh;
   background: url('/images/topographic.svg') center / cover no-repeat fixed;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 h1,

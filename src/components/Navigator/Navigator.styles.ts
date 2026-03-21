@@ -13,9 +13,17 @@ export const Button = styled.button`
   padding: 20px;
   display: flex;
   gap: 5px;
+  transition: color 0.15s ease;
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      color: ${theme.primary};
+    }
+  }
+
+  &:active {
     color: ${theme.primary};
+    opacity: 0.7;
   }
 `;
 
