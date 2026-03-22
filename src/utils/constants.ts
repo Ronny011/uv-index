@@ -13,4 +13,24 @@ export const TRANSITION_TIME = 0.3;
 export const EASE = 'easeInOut';
 
 export const APP_WIDTH = 250;
-export const APP_HEIGHT = 360;
+export const APP_HEIGHT = 377;
+
+// Unified color scale for UV and Air Quality levels
+// Used for both UV index (4 levels) and AQI (6 levels)
+export const LEVEL_COLORS = {
+  good: '#16a34a',
+  moderate: '#facc15',
+  unhealthyForSensitive: '#f97316',
+  unhealthy: '#ef4444',
+  veryUnhealthy: '#b91c1c',
+  hazardous: '#7c3aed'
+} as const;
+
+export const AQI_LEVEL_COLORS = [
+  LEVEL_COLORS.good,
+  LEVEL_COLORS.moderate,
+  LEVEL_COLORS.unhealthyForSensitive,
+  LEVEL_COLORS.unhealthy,
+  LEVEL_COLORS.veryUnhealthy,
+  LEVEL_COLORS.hazardous
+] as const;

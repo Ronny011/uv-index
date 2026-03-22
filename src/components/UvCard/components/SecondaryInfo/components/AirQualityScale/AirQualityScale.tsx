@@ -1,6 +1,6 @@
 import { type FC } from 'react';
-import { airQualityLevelMutedColors, LevelBlock, Scale } from './AirQualityScale.styles';
-import { EASE, TRANSITION_TIME } from 'utils/constants';
+import { LevelBlock, Scale } from './AirQualityScale.styles';
+import { AQI_LEVEL_COLORS, EASE, TRANSITION_TIME } from 'utils/constants';
 import { Skeleton } from '../../../Skeleton';
 import { Body } from 'components/UvCard/UvCard.styles';
 
@@ -32,7 +32,7 @@ export const AirQualityScale: FC<Props> = ({ aqi, qualityLevel, isloading, error
       <Body>{error?.message || 'Air quality'}</Body>
 
       <Scale>
-        {airQualityLevelMutedColors.map((color, index) => {
+        {AQI_LEVEL_COLORS.map((color, index) => {
           const isActiveBlock = qualityLevel === index;
           return (
             <LevelBlock

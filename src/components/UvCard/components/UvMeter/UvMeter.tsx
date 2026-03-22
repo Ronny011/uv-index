@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { FilledPath, IndexLabel, MeterWrapper, TrackPath, ValueLabel } from './UvMeter.styles';
 import {
   buildFilledArcPath,
-  buildGradientStops,
+  buildConicGradient,
   CENTER_X,
   CENTER_Y,
   formatDisplayValue,
@@ -16,10 +16,11 @@ type Props = {
   uv: number | undefined;
 };
 
+const conicGradient = buildConicGradient();
+
 export const UvMeter: FC<Props> = ({ uv = 0 }) => {
   const percentage = Math.min(uv / MAX_UV, 1);
   const { x: arcEndX, y: arcEndY, largeArcFlag } = getArcEndpoint(percentage);
-  const gradientStops = buildGradientStops(uv);
   const filledArcPath = percentage > 0 ? buildFilledArcPath(arcEndX, arcEndY, largeArcFlag) : '';
 
   return (
@@ -30,21 +31,22 @@ export const UvMeter: FC<Props> = ({ uv = 0 }) => {
         height='130'
       >
         <defs>
-          <linearGradient
-            id='uvArcGradient'
-            x1='0%'
-            y1='0%'
-            x2='100%'
-            y2='0%'
-          >
-            {gradientStops.map((stop, index) => (
-              <stop
-                key={index}
-                offset={stop.offset}
-                stopColor={stop.color}
+          <mask id='uvArcMask'>
+            <rect
+              x='0'
+              y='0'
+              width='220'
+              height='130'
+              fill='black'
+            />
+            {percentage > 0 && (
+              <FilledPath
+                d={filledArcPath}
+                stroke='white'
+                strokeWidth={STROKE_WIDTH}
               />
-            ))}
-          </linearGradient>
+            )}
+          </mask>
         </defs>
 
         <TrackPath
@@ -53,11 +55,21 @@ export const UvMeter: FC<Props> = ({ uv = 0 }) => {
         />
 
         {percentage > 0 && (
-          <FilledPath
-            d={filledArcPath}
-            stroke='url(#uvArcGradient)'
-            strokeWidth={STROKE_WIDTH}
-          />
+          <foreignObject
+            x='0'
+            y='0'
+            width='220'
+            height='130'
+            mask='url(#uvArcMask)'
+          >
+            <div
+              style={{
+                width: '220px',
+                height: '130px',
+                background: conicGradient
+              }}
+            />
+          </foreignObject>
         )}
 
         <ValueLabel

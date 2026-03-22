@@ -12,7 +12,7 @@ export const ChangeSettlement: FC<CardProps> = ({ changeCardMode }) => {
   const [showMessage, setShowMessage] = useState(false);
   const settlements = usePersistSettlements((state) => state.settlements);
   const removeSettlement = usePersistSettlements((state) => state.removeSettlement);
-  const setSeletecSettlement = usePersistSeletedSettlement((state) => state.setSeletecSettlement);
+  const setSelectedSettlement = usePersistSeletedSettlement((state) => state.setSelectedSettlement);
   const removeSelectedSettlement = usePersistSeletedSettlement((state) => state.removeSelectedSettlement);
 
   const handleSettlementClick = (settlement: SettlementLocalStorage) => {
@@ -22,7 +22,7 @@ export const ChangeSettlement: FC<CardProps> = ({ changeCardMode }) => {
       return;
     }
 
-    setSeletecSettlement(settlement);
+    setSelectedSettlement(settlement);
 
     setShowMessage(true);
     setTimeout(() => {

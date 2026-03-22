@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 import { Body } from '../../UvCard.styles';
 import { Chip } from './MaxUv.styles';
-import { LOW_UV_CUTOFF } from '../../utils/constants';
 import type { MaxUvObject } from 'types';
 
 export const MaxUv: FC<{ maxUvObject: MaxUvObject | undefined }> = ({ maxUvObject }) => {
@@ -10,7 +9,7 @@ export const MaxUv: FC<{ maxUvObject: MaxUvObject | undefined }> = ({ maxUvObjec
   return (
     <Body>
       Today's max
-      <Chip $isLowUv={Number(maxUv) < LOW_UV_CUTOFF}>{String(parseFloat(Number(maxUv).toFixed(2)))}</Chip>
+      <Chip $uv={Number(maxUv)}>{Number(maxUv).toFixed(1)}</Chip>
       at {maxUvTime}
     </Body>
   );
