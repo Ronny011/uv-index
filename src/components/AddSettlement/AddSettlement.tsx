@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { useSearchSettlements } from 'api/queries/useMultiLocation';
 import { Button, FlexBox, Input, Message, Settlement, SettlementsList } from './AddSettlement.styles';
 import type { SettlementResponse } from 'types';
 import { getCountry } from 'utils/helpers';
 import { usePersistSettlements } from 'store/usePersistSettlements';
+import type { CardProps } from 'App';
 
-export const AddSettlement = () => {
+export const AddSettlement: FC<CardProps> = ({ changeCardMode }) => {
   const [query, setQuery] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [shouldQuery, setShouldQuery] = useState(false);
@@ -24,6 +25,8 @@ export const AddSettlement = () => {
     setTimeout(() => {
       setShowMessage(false);
     }, 1000);
+
+    changeCardMode('changeSettlement');
   };
 
   const handleSave = () => setShouldQuery(true);

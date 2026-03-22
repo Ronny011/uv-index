@@ -2,7 +2,7 @@ import { Body } from './UvCard.styles';
 import { UvMeter } from './components/UvMeter';
 import { LOCALSTORAGE_MAX_UV_KEY } from './utils/constants';
 import { Skeleton } from './components/Skeleton';
-import { SELECTED_LOCATION_KEY, useGetCardData } from './hooks/useGetCardData';
+import { useGetCardData } from './hooks/useGetCardData';
 import { SecondaryInfo } from './components/SecondaryInfo';
 import { useEffect } from 'react';
 
@@ -10,6 +10,7 @@ import type { MaxUvObject } from 'types';
 import { MaxUv } from './components/MaxUv';
 import { useMaxUvLocalStorage } from './hooks/useMaxUvLocalStorage';
 import { SETTLEMENTS_KEY } from 'store/usePersistSettlements';
+import { SELECTED_LOCATION_KEY } from 'store/usePersistSeletedSettlement';
 
 const keysToExclude = [SETTLEMENTS_KEY, SELECTED_LOCATION_KEY];
 

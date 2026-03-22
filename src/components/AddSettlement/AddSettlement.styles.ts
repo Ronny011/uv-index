@@ -4,8 +4,7 @@ import { theme } from 'utils/constants';
 export const FlexBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 25px;
+  gap: 10px;
 `;
 
 export const Message = styled.p`
@@ -23,16 +22,15 @@ export const SettlementsList = styled.ul`
 
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 15px;
   text-align: center;
 `;
 
 export const Settlement = styled.li`
   cursor: pointer;
   border: 1px solid transparent;
-  padding: 8px;
+  padding: 5px;
   border-radius: 4px;
-  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;

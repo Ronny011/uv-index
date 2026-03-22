@@ -7,8 +7,9 @@ import { AddSettlement } from 'components/AddSettlement';
 import { ChangeSettlement } from 'components/ChangeSettlement';
 
 export type CardMode = 'changeSettlement' | 'addSettlement' | 'uv';
+export type CardProps = { changeCardMode: (mode: CardMode) => void };
 
-const cardModeToComponent: Record<CardMode, () => React.JSX.Element> = {
+const cardModeToComponent: Record<CardMode, React.FC<CardProps>> = {
   addSettlement: AddSettlement,
   changeSettlement: ChangeSettlement,
   uv: UvCard
@@ -27,7 +28,7 @@ function App() {
       <Page>
         <Navigator onNavigate={handleModeChange} />
         <ContentWrapper>
-          <Component />
+          <Component changeCardMode={handleModeChange} />
         </ContentWrapper>
       </Page>
     </QueryClientProvider>

@@ -34,7 +34,7 @@ export const ContentWrapper = styled.section`
   align-items: center;
   text-align: center;
   padding: 20px;
-  height: ${APP_HEIGHT}px;
+  min-height: ${APP_HEIGHT}px;
   width: ${APP_WIDTH}px;
 
   ${commonWrapper}

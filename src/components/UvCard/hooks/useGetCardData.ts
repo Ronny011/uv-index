@@ -1,18 +1,17 @@
 import { useReverseGeocode } from 'queries/useReverseGeocode';
 import { useGetGeolocation } from './useGetGeolocation';
 import { useUvIndex } from 'queries/useUvIndex';
+import { usePersistSeletedSettlement } from 'store/usePersistSeletedSettlement';
+import { SettlementLocalStorage } from 'store/usePersistSettlements';
 
-export const SELECTED_LOCATION_KEY = 'selected-location';
-
-const getSelectedLocation = () => {
-  const location = localStorage.getItem(SELECTED_LOCATION_KEY);
+const getSelectedLocation = (settlement: SettlementLocalStorage | undefined) => {
+  const location = settlement;
 
   if (location) {
-    const parsedLocation = JSON.parse(location);
-    parsedLocation.geolocationError = '';
+    const { lat, lon } = location;
     return {
-      latitude: parsedLocation.lat,
-      longitude: parsedLocation.lon,
+      latitude: lat,
+      longitude: lon,
       geolocationError: ''
     };
   }
@@ -22,8 +21,9 @@ const getSelectedLocation = () => {
 
 export const useGetCardData = () => {
   const deviceLocation = useGetGeolocation();
+  const selectedSettlement = usePersistSeletedSettlement((state) => state.selectedSettlement);
 
-  const selectedLocation = getSelectedLocation() || deviceLocation;
+  const selectedLocation = getSelectedLocation(selectedSettlement) || deviceLocation;
   const { latitude, longitude, geolocationError } = selectedLocation;
 
   const {
