@@ -5,7 +5,7 @@ Quick and easy UV index info.
 See it live: https://ronny011.github.io/uv-index/
 
 <p align="center">
-    <img src="./public/images/example.png" alt="Alt text" width="30%">
+    <img src="./public/images/screenshot.png" alt="Alt text" width="30%">
 </p>
 
 Want to decide whether you should put on some sun screen? Well, tough luck if you don't have a UV index indication in your weather app, and finding it online isn't any easier, having to sift through UV tables.
