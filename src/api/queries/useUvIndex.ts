@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getBackupUvIndex, getUvIndex } from '../uvIndex';
-import { ISO_TIME_DELIMITER, STALE_TIME } from '../../utils/constants';
+import { ISO_TIME_DELIMITER, SHORT_STALE_TIME, STALE_TIME } from '../../utils/constants';
 import type { UvIndexHookData } from 'types';
 import { getDateFromISO, getMaxUv, getTimeFromISO, getWeightedAverageUvIndex } from 'components/UvCard/utils/helpers';
 import { INVALID_LAT_LONG } from 'components/UvCard/utils/constants';
@@ -32,7 +32,9 @@ export const useUvIndex = (longitude: number, latitude: number) => {
     queryKey: ['uv-index', longitude, latitude],
     queryFn: getUvIndexAsync,
     enabled: latitude !== INVALID_LAT_LONG && longitude !== INVALID_LAT_LONG,
-    staleTime: STALE_TIME
+    staleTime: SHORT_STALE_TIME,
+    placeholderData: keepPreviousData,
+    refetchInterval: SHORT_STALE_TIME
   });
 };
 

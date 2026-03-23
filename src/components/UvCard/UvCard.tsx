@@ -62,7 +62,7 @@ export const UvCard = () => {
     <>
       {isReverseGeolocationPending ? (
         <Skeleton
-          height={24}
+          height={18}
           width={215}
         />
       ) : (
@@ -73,7 +73,7 @@ export const UvCard = () => {
 
       {isUvIndexPeding ? (
         <Skeleton
-          height={120}
+          height={130}
           width={200}
           margin='10px 0'
         />

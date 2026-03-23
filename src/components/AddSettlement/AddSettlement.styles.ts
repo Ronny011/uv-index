@@ -7,14 +7,6 @@ export const FlexBox = styled.div`
   gap: 10px;
 `;
 
-export const Message = styled.p`
-  margin: 0;
-  padding: 0;
-
-  height: 16px;
-  color: #008b58;
-`;
-
 export const SettlementsList = styled.ul`
   list-style: none;
   padding: 0;
@@ -51,33 +43,9 @@ export const Settlement = styled.li`
 export const Input = styled.input`
   all: unset;
   border: 3px solid ${theme.primary};
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 10px;
   min-height: 44px;
   box-sizing: border-box;
   font-size: 16px;
-`;
-
-export const Button = styled.button`
-  all: unset;
-  background-color: ${theme.primary};
-  padding: 12px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  min-height: 44px;
-  box-sizing: border-box;
-  transition:
-    box-shadow 0.15s ease,
-    opacity 0.15s ease;
-
-  @media (hover: hover) {
-    &:hover {
-      ${theme.boxShadow}
-    }
-  }
-
-  &:active {
-    ${theme.boxShadow}
-    opacity: 0.7;
-  }
 `;

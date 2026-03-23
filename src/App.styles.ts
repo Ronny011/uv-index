@@ -39,3 +39,27 @@ export const ContentWrapper = styled.section`
 
   ${commonWrapper}
 `;
+
+export const Button = styled.button`
+  all: unset;
+  background-color: ${theme.primary};
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
+  transition:
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      ${theme.boxShadow}
+    }
+  }
+
+  &:active {
+    ${theme.boxShadow}
+    opacity: 0.7;
+  }
+`;
